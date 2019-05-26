@@ -37,7 +37,7 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run clean && npm run predeploy && gh-pages -d demo/dist"
   },
   "dependencies": {
     "prop-types": "^15.7.2"
