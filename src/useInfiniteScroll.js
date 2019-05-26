@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import useWindowHeight from "./useWindowHeight";
 
-const useInfiniteScroll = ({
+function useInfiniteScroll({
   loading,
   hasNextPage,
   loadMore,
   threshold = 150,
   checkInterval = 200
-}) => {
+}) {
   const ref = useRef();
   const intervalRef = useRef();
   const windowHeight = useWindowHeight();
@@ -25,15 +25,15 @@ const useInfiniteScroll = ({
   }, [loading]);
 
   useEffect(() => {
-    const getBottomOffset = () => {
+    function getBottomOffset() {
       const rect = ref.current.getBoundingClientRect();
       const bottom = rect.bottom;
       const bottomOffset = bottom - windowHeight;
 
       return bottomOffset;
-    };
+    }
 
-    const listenBottomOffset = () => {
+    function listenBottomOffset() {
       intervalRef.current = setInterval(() => {
         if (listen && !loading && hasNextPage) {
           if (ref.current) {
@@ -49,7 +49,7 @@ const useInfiniteScroll = ({
           }
         }
       }, checkInterval);
-    };
+    }
 
     listenBottomOffset();
 
@@ -67,6 +67,6 @@ const useInfiniteScroll = ({
   ]);
 
   return ref;
-};
+}
 
 export default useInfiniteScroll;

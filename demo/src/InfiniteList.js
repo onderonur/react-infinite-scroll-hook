@@ -5,7 +5,7 @@ import { useInfiniteScroll } from "../../src";
 const ARRAY_SIZE = 20;
 const RESPONSE_TIME = 1000;
 
-const loadItems = (prevArray = [], startCursor = 0) => {
+function loadItems(prevArray = [], startCursor = 0) {
   return new Promise(resolve => {
     setTimeout(() => {
       let newArray = prevArray;
@@ -21,7 +21,7 @@ const loadItems = (prevArray = [], startCursor = 0) => {
       resolve(newArray);
     }, RESPONSE_TIME);
   });
-};
+}
 
 function InfiniteList() {
   const [loading, setLoading] = useState(false);
