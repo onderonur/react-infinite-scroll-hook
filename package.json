@@ -1,0 +1,58 @@
+{
+  "name": "react-infinite-scroll-hook",
+  "version": "1.0.0",
+  "description": "A simple hook to create infinite scroll list components",
+  "author": "Onur Onder",
+  "homepage": "TODO: Add gh-pages",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onderonur/react-infinite-scroll-hook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onderonur/react-infinite-scroll-hook/issues"
+  },
+  "keywords": [
+    "react",
+    "react-hooks",
+    "infinite-scroll",
+    "react-component"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "./index.d.ts",
+  "files": [
+    "css",
+    "es",
+    "lib",
+    "umd",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "prepublishOnly": "npm run build",
+    "start": "nwb serve-react-demo",
+    "test": "nwb test-react",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "gh-pages": "^2.0.1",
+    "nwb": "0.23.x",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
