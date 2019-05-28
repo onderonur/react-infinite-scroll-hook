@@ -4,7 +4,7 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-🔨 Under construction 🛠
+🔨 Under construction 🛠 
 Will release soon :)
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
