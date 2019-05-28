@@ -1,6 +1,20 @@
-import "./InfiniteList.css";
 import React, { useState } from "react";
 import { useInfiniteScroll } from "../../src";
+import styled from "styled-components";
+
+const List = styled.ul`
+  list-style: none;
+  font-size: 16px;
+  margin: 0;
+  padding: 6px;
+`;
+
+const ListItem = styled.li`
+  background-color: #fafafa;
+  border: 1px solid #99b4c0;
+  padding: 8px;
+  margin: 4px;
+`;
 
 const ARRAY_SIZE = 20;
 const RESPONSE_TIME = 1000;
@@ -40,18 +54,17 @@ function InfiniteList() {
     // This value is set to "true" for this demo only. You will need to
     // get this value from the API when you request your items.
     hasNextPage: true,
-    loadMore
+    loadMore,
+    scrollContainer: "parent"
   });
 
   return (
-    <ul ref={infiniteRef} className="infinite-list">
+    <List ref={infiniteRef}>
       {items.map(item => (
-        <li key={item.key} className="infinite-list-item">
-          {item.value}
-        </li>
+        <ListItem key={item.key}>{item.value}</ListItem>
       ))}
-      {loading && <li>Loading...</li>}
-    </ul>
+      {loading && <ListItem>Loading...</ListItem>}
+    </List>
   );
 }
 
