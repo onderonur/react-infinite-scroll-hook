@@ -37,7 +37,7 @@ function loadItems(prevArray = [], startCursor = 0) {
   });
 }
 
-function InfiniteList() {
+function InfiniteList({ scrollContainer }) {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
 
@@ -55,7 +55,7 @@ function InfiniteList() {
     // get this value from the API when you request your items.
     hasNextPage: true,
     loadMore,
-    scrollContainer: "parent"
+    scrollContainer
   });
 
   return (

@@ -1,30 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { render } from "react-dom";
 import InfiniteList from "./InfiniteList";
-import styled, { createGlobalStyle } from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    height: 3000px;
-    width: 3000px;
-  }
-`;
+import styled from "styled-components";
 
 const ListContainer = styled.div`
-  max-height: 600px;
-  max-width: 600px;
+  max-height: ${props => (props.scrollable ? "600px" : "auto")};
+  max-width: ${props => (props.scrollable ? "600px" : "auto")};
   overflow: auto;
   background-color: #e4e4e4;
 `;
 
 function Demo() {
+  const [scrollParent, setScrollParent] = useState(false);
+
+  function handleChange(e) {
+    const checked = e.target.checked;
+    setScrollParent(checked);
+  }
+
   return (
     <React.Fragment>
-      <GlobalStyle />
       <h1>Infinite List</h1>
       <h3>Created by using "react-infinite-scroll-hook"</h3>
-      <ListContainer>
-        <InfiniteList />
+      <input type="checkbox" checked={scrollParent} onChange={handleChange} />
+      Scrollable Parent
+      <ListContainer scrollable={scrollParent}>
+        <InfiniteList scrollContainer={scrollParent ? "parent" : "window"} />
       </ListContainer>
     </React.Fragment>
   );
