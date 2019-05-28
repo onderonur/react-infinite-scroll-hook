@@ -31,6 +31,7 @@ function useInfiniteScroll({
     const parentNode = ref.current.parentNode;
     const parentRect = parentNode.getBoundingClientRect();
     const { top, bottom, left, right } = parentRect;
+
     return { top, bottom, left, right };
   }
 
@@ -39,6 +40,7 @@ function useInfiniteScroll({
 
     const bottom = rect.bottom;
     let bottomOffset = bottom - windowHeight;
+
     if (scrollContainer === PARENT) {
       const { bottom: parentBottom } = getParentSizes();
       // Distance between bottom of list and its parent
@@ -50,6 +52,7 @@ function useInfiniteScroll({
 
   function isParentInView() {
     const parent = ref.current ? ref.current.parentNode : null;
+
     if (parent) {
       const { left, right, top, bottom } = getParentSizes();
       if (left > windowWidth) {
@@ -62,6 +65,7 @@ function useInfiniteScroll({
         return false;
       }
     }
+
     return true;
   }
 
