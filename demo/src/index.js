@@ -21,7 +21,7 @@ function Demo() {
   return (
     <React.Fragment>
       <h1>Infinite List</h1>
-      <h3>Created by using "react-infinite-scroll-hook"</h3>
+      <h3>Created by using “react-infinite-scroll-hook”</h3>
       <input type="checkbox" checked={scrollParent} onChange={handleChange} />
       Scrollable Parent
       <ListContainer scrollable={scrollParent}>

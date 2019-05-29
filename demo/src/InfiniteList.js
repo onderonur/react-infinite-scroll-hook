@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useInfiniteScroll } from "../../src";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const List = styled.ul`
   list-style: none;
@@ -67,5 +68,9 @@ function InfiniteList({ scrollContainer }) {
     </List>
   );
 }
+
+InfiniteList.propTypes = {
+  scrollContainer: PropTypes.oneOf(["window", "parent"])
+};
 
 export default InfiniteList;
