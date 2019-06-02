@@ -1,7 +1,5 @@
 # react-infinite-scroll-hook
 
-🔨 Under construction 🛠 Will release soon :)
-
 This is a hook to create infinite scroll components!  
 It has a really basic logic that solved a lot of problems for me. So, I just wanted to publish it as a package.
 
