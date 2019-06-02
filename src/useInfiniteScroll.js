@@ -9,7 +9,7 @@ function useInfiniteScroll({
   loading,
   hasNextPage,
   loadMore,
-  threshold = 250,
+  threshold = 150,
   checkInterval = 200,
   scrollContainer = WINDOW
 }) {
