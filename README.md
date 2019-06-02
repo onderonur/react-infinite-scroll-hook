@@ -1,7 +1,10 @@
 # react-infinite-scroll-hook
 
 This is a hook to create infinite scroll components!  
-It has a really basic logic that solved a lot of problems for me. So, I just wanted to publish it as a package.
+It has a really basic logic that solved a lot of problems for me. So, I just wanted to publish it as a package.  
+
+**Live demo is [here](https://onderonur.github.io/react-infinite-scroll-hook/).**  
+Also, you can find a more complete usage with **react-apollo** [here](https://github.com/onderonur/movies-app-graphql).
 
 Basically; `useInfiniteScroll` hook checks the DOM with an interval and looks at the distance between the bottom of your "infinite" component and the bottom of the window.  
 You can set `scrollContainer` prop to `parent` if you want to use the scrollable parent of that infinite container and not the window. With this setting, when the parent component is in view, the hook will check the bottom offset and trigger the `loadMore` callback if offset is less than `threshold`.
