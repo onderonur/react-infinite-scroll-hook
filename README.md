@@ -1,19 +1,60 @@
 # react-infinite-scroll-hook
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
-
 🔨 Under construction 🛠 Will release soon :)
 
 This is a hook to create infinite scroll components!  
 It has a really basic logic that solved a lot of problems for me. So, I just wanted to publish it as a package.
 
-Basically;  
-`useInfiniteScroll` hook checks the DOM with an interval and looks at the distance between the bottom of your "infinite" component and the bottom of the window.  
-You can set `scrollContainer` prop to `parent` if you want to use the scrollable parent of that infinite container and not the window.  
+Basically; `useInfiniteScroll` hook checks the DOM with an interval and looks at the distance between the bottom of your "infinite" component and the bottom of the window.  
+You can set `scrollContainer` prop to `parent` if you want to use the scrollable parent of that infinite container and not the window. With this setting, when the parent component is in view, the hook will check the bottom offset and trigger the `loadMore` callback if offset is less than `threshold`.
 
-While setting the interval, we use another custom hook named `useInterval` and make the `setInterval` declarative. It has been explained by Dan Abramov [here](https://overreacted.io/making-setinterval-declarative-with-react-hooks/).  
+While setting the interval, we use another custom hook named `useInterval` and it makes the `setInterval` declarative. It has been explained by Dan Abramov [here](https://overreacted.io/making-setinterval-declarative-with-react-hooks/). 
+
+### Basic Usage
+```javascript
+function InfiniteList({  }) {
+  const [items, setItems] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState();
+    
+  /// ...
+
+  function loadMore() {
+    setLoading(true);
+    // Some API call to fetch the next page
+    loadNextPage(endCursor, pageSize).then(newPage => {
+      setLoading(false);
+      setHasNextPage(nextPage.hasNextPage)
+      setItems([...items, newPage.items]);
+    });
+  }
+
+  const infiniteRef = useInfiniteScroll({
+    loading,
+    hasNextPage,
+    loadMore,
+    scrollContainer
+  });
+  
+  // ...
+
+  return (
+    <List ref={infiniteRef}>
+      {items.map(item => (
+        <ListItem key={item.key}>{item.value}</ListItem>
+      ))}
+      {loading && <ListItem>Loading...</ListItem>}
+    </List>
+  );
+}
+```
+
+### Props
+**loading:** Some sort of "fetching" info of the request.
+**hasNextPage:** If the list has more items to load.
+**loadMore:** The callback function to execute when the threshold is exceeded.
+**threshold:** Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.
+**checkInterval:** Frequency to check the dom. Default is 200.
+**scrollContainer:** May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
