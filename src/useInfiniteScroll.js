@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useInterval, useWindowSize } from ".";
+import useWindowSize from "./useWindowSize";
+import useInterval from "./useInterval";
 
 const WINDOW = "window";
 const PARENT = "parent";
