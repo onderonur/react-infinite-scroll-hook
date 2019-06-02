@@ -49,12 +49,12 @@ function InfiniteList({  }) {
 ```
 
 ### Props
-**loading:** Some sort of "fetching" info of the request.  
-**hasNextPage:** If the list has more items to load.  
-**loadMore:** The callback function to execute when the threshold is exceeded.  
-**threshold:** Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.  
-**checkInterval:** Frequency to check the dom. Default is 200.  
-**scrollContainer:** May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
+* **loading:** Some sort of "fetching" info of the request.  
+* **hasNextPage:** If the list has more items to load.  
+* **loadMore:** The callback function to execute when the threshold is exceeded.  
+* **threshold:** Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.  
+* **checkInterval:** Frequency to check the dom. Default is 200.  
+* **scrollContainer:** May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
