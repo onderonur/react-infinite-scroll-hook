@@ -15,19 +15,17 @@ function useWindowSize() {
   const [size, setSize] = useState(getSize());
 
   useEffect(() => {
-    if (validWindow) {
-      return;
-    }
-
     function handleResize() {
       setSize(getSize());
     }
 
-    window.addEventListener("resize", handleResize);
+    if (validWindow) {
+      window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, [getSize, validWindow]);
 
   return size;
