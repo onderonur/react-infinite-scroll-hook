@@ -93,9 +93,13 @@ function useInfiniteScroll({
     }
   }
 
-  useInterval(() => {
-    listenBottomOffset();
-  }, checkInterval);
+  useInterval(
+    () => {
+      listenBottomOffset();
+    },
+    // Stop interval when there is no next page.
+    hasNextPage ? checkInterval : 0
+  );
 
   return ref;
 }

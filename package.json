@@ -1,6 +1,6 @@
 {
   "name": "react-infinite-scroll-hook",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple hook to create infinite scroll components",
   "author": "Onur Onder",
   "homepage": "https://onderonur.github.io/react-infinite-scroll-hook/",
@@ -51,6 +51,6 @@
     "nwb": "0.23.x",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "styled-components": "^4.2.1"
+    "styled-components": "^4.3.1"
   }
 }
