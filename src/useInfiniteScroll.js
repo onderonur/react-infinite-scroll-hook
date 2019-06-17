@@ -8,7 +8,7 @@ const PARENT = "parent";
 function useInfiniteScroll({
   loading,
   hasNextPage,
-  loadMore,
+  onLoadMore,
   threshold = 150,
   checkInterval = 200,
   scrollContainer = WINDOW
@@ -19,7 +19,7 @@ function useInfiniteScroll({
   // number (like 10 etc.), some request components can't set its loading state
   // immediately (I had this problem with react-apollo's Query component. In some cases, it runs
   // "updateQuery" twice). Thus we set our own "listen" state which immeadiately turns to "false" on
-  // calling "loadMore".
+  // calling "onLoadMore".
   const [listen, setListen] = useState(true);
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function useInfiniteScroll({
 
         if (validOffset) {
           setListen(false);
-          loadMore();
+          onLoadMore();
         }
       }
     }

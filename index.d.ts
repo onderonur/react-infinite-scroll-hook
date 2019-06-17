@@ -5,7 +5,7 @@ declare module "react-infinite-scroll-hook" {
     // If the list has more items to load.
     hasNextPage: boolean;
     // The callback function to execute when the threshold is exceeded.
-    loadMore: Function;
+    onLoadMore: Function;
     // Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.
     threshold?: number;
     // Frequency to check the dom. Default is 200.

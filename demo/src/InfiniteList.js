@@ -42,7 +42,7 @@ function InfiniteList({ scrollContainer }) {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
 
-  function loadMore() {
+  function handleLoadMore() {
     setLoading(true);
     loadItems(items, items.length).then(newArray => {
       setLoading(false);
@@ -55,7 +55,7 @@ function InfiniteList({ scrollContainer }) {
     // This value is set to "true" for this demo only. You will need to
     // get this value from the API when you request your items.
     hasNextPage: true,
-    loadMore,
+    onLoadMore: handleLoadMore,
     scrollContainer
   });
 
