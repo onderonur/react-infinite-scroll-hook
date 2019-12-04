@@ -11,6 +11,10 @@ You can set `scrollContainer` prop to `parent` if you want to use the scrollable
 
 While setting the interval, we use another custom hook named `useInterval` and it makes the `setInterval` declarative. It has been explained by Dan Abramov [here](https://overreacted.io/making-setinterval-declarative-with-react-hooks/).
 
+### Installation
+
+`npm install react-infinite-scroll-hook`
+
 ### Basic Usage
 
 ```javascript
