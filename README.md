@@ -13,7 +13,9 @@ While setting the interval, we use another custom hook named `useInterval` and i
 
 ### Installation
 
-`npm install react-infinite-scroll-hook`
+```sh
+npm install react-infinite-scroll-hook
+```
 
 ### Basic Usage
 
