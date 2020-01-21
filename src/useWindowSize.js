@@ -6,7 +6,7 @@ function useWindowSize() {
   const getSize = useCallback(() => {
     const size = {
       width: validWindow ? window.innerWidth : undefined,
-      height: validWindow ? window.innerHeight : undefined
+      height: validWindow ? window.innerHeight : undefined,
     };
 
     return size;

@@ -11,9 +11,9 @@ function useInfiniteScroll({
   onLoadMore,
   threshold = 150,
   checkInterval = 200,
-  scrollContainer = WINDOW
+  scrollContainer = WINDOW,
 }) {
-  const ref = useRef();
+  const ref = useRef(null);
   const { height: windowHeight, width: windowWidth } = useWindowSize();
   // Normally we could use the "loading" prop, but when you set "checkInterval" to a very small
   // number (like 10 etc.), some request components can't set its loading state
@@ -98,7 +98,7 @@ function useInfiniteScroll({
       listenBottomOffset();
     },
     // Stop interval when there is no next page.
-    hasNextPage ? checkInterval : 0
+    hasNextPage ? checkInterval : 0,
   );
 
   return ref;

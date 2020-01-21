@@ -1,4 +1,4 @@
-declare module 'react-infinite-scroll-hook' {
+declare module "react-infinite-scroll-hook" {
   export interface useInfiniteScrollProps {
     // Some sort of "fetching" info of the request.
     loading: boolean;
@@ -11,9 +11,9 @@ declare module 'react-infinite-scroll-hook' {
     // Frequency to check the dom. Default is 200.
     checkInterval?: number;
     // May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
-    scrollContainer?: 'window' | 'parent';
+    scrollContainer?: "window" | "parent";
   }
-  export function useInfiniteScroll(
+  export function useInfiniteScroll<T>(
     props: useInfiniteScrollProps
-  ): React.MutableRefObject<undefined>;
+  ): React.MutableRefObject<T | null>;
 }
