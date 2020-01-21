@@ -1,14 +1,14 @@
 module.exports = {
-  type: "react-component",
+  type: 'react-component',
   npm: {
     esModules: true,
     umd: {
-      global: "ReactInfiniteScrollHook",
+      global: 'ReactInfiniteScrollHook',
       externals: {
-        react: "React",
-        "react-dom": "ReactDom"
-      }
-    }
+        react: 'React',
+        'react-dom': 'ReactDom',
+      },
+    },
   },
   webpack: {
     extra: {
@@ -16,12 +16,12 @@ module.exports = {
         rules: [
           {
             test: /\.js$/,
-            enforce: "pre",
-            loader: "eslint-loader",
-            exclude: /node_modules/
-          }
-        ]
-      }
-    }
-  }
+            enforce: 'pre',
+            loader: 'eslint-loader',
+            exclude: /node_modules/,
+          },
+        ],
+      },
+    },
+  },
 };

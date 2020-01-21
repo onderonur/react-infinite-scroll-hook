@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import useWindowSize from "./useWindowSize";
-import useInterval from "./useInterval";
+import { useEffect, useRef, useState } from 'react';
+import useWindowSize from './useWindowSize';
+import useInterval from './useInterval';
 
-const WINDOW = "window";
-const PARENT = "parent";
+const WINDOW = 'window';
+const PARENT = 'parent';
 
 function useInfiniteScroll({
   loading,
@@ -11,7 +11,7 @@ function useInfiniteScroll({
   onLoadMore,
   threshold = 150,
   checkInterval = 200,
-  scrollContainer = WINDOW
+  scrollContainer = WINDOW,
 }) {
   const ref = useRef(null);
   const { height: windowHeight, width: windowWidth } = useWindowSize();
@@ -98,7 +98,7 @@ function useInfiniteScroll({
       listenBottomOffset();
     },
     // Stop interval when there is no next page.
-    hasNextPage ? checkInterval : 0
+    hasNextPage ? checkInterval : 0,
   );
 
   return ref;

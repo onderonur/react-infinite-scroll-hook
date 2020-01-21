@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useInfiniteScroll } from "../../src";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import { useInfiniteScroll } from '../../src';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const List = styled.ul`
   list-style: none;
@@ -28,7 +28,7 @@ function loadItems(prevArray = [], startCursor = 0) {
       for (let i = startCursor; i < startCursor + ARRAY_SIZE; i++) {
         const newItem = {
           key: i,
-          value: `This is item ${i}`
+          value: `This is item ${i}`,
         };
         newArray = [...newArray, newItem];
       }
@@ -56,7 +56,7 @@ function InfiniteList({ scrollContainer }) {
     // get this value from the API when you request your items.
     hasNextPage: true,
     onLoadMore: handleLoadMore,
-    scrollContainer
+    scrollContainer,
   });
 
   return (
@@ -70,7 +70,7 @@ function InfiniteList({ scrollContainer }) {
 }
 
 InfiniteList.propTypes = {
-  scrollContainer: PropTypes.oneOf(["window", "parent"])
+  scrollContainer: PropTypes.oneOf(['window', 'parent']),
 };
 
 export default InfiniteList;
