@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import useWindowSize from './useWindowSize';
-import useInterval from './useInterval';
+import { useEffect, useRef, useState } from "react";
+import useWindowSize from "./useWindowSize";
+import useInterval from "./useInterval";
 
-const WINDOW = 'window';
-const PARENT = 'parent';
+const WINDOW = "window";
+const PARENT = "parent";
 
 function useInfiniteScroll({
   loading,
@@ -13,7 +13,7 @@ function useInfiniteScroll({
   checkInterval = 200,
   scrollContainer = WINDOW
 }) {
-  const ref = useRef();
+  const ref = useRef(null);
   const { height: windowHeight, width: windowWidth } = useWindowSize();
   // Normally we could use the "loading" prop, but when you set "checkInterval" to a very small
   // number (like 10 etc.), some request components can't set its loading state
