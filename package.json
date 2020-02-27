@@ -38,7 +38,8 @@
     "test:watch": "nwb test-react --server",
     "predeploy": "npm run clean && npm run build",
     "deploy": "npm run predeploy && gh-pages -d demo/dist",
-    "lint": "node_modules/.bin/eslint . --fix"
+    "lint": "node_modules/.bin/eslint . --fix",
+    "install": "npm run build"
   },
   "peerDependencies": {
     "react": "16.x"
