@@ -4,6 +4,7 @@ import useInterval from './useInterval';
 
 const WINDOW = 'window';
 const PARENT = 'parent';
+const SELF = 'self';
 
 function useInfiniteScroll({
   loading,
@@ -40,12 +41,17 @@ function useInfiniteScroll({
     const rect = ref.current.getBoundingClientRect();
 
     const bottom = rect.bottom;
-    let bottomOffset = bottom - windowHeight;
+    let bottomOffset;
 
     if (scrollContainer === PARENT) {
       const { bottom: parentBottom } = getParentSizes();
       // Distance between bottom of list and its parent
       bottomOffset = bottom - parentBottom;
+    } else if (scrollContainer === SELF) {
+      const self = ref.current;
+      bottomOffset = self.scrollHeight - (self.scrollTop + self.clientHeight);
+    } else {
+      bottomOffset = bottom - windowHeight;
     }
 
     return bottomOffset;
