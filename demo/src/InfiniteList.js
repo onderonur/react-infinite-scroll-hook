@@ -21,6 +21,7 @@ const ARRAY_SIZE = 20;
 const RESPONSE_TIME = 1000;
 
 function loadItems(prevArray = [], startCursor = 0) {
+  console.log('loadItems', startCursor);
   return new Promise(resolve => {
     setTimeout(() => {
       let newArray = prevArray;

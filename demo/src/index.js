@@ -27,6 +27,9 @@ function Demo() {
       <ListContainer scrollable={scrollParent}>
         <InfiniteList scrollContainer={scrollParent ? 'parent' : 'window'} />
       </ListContainer>
+        <div style={{height: 600, backgroundColor: 'yellow'}}>
+            footer
+        </div>
     </React.Fragment>
   );
 }

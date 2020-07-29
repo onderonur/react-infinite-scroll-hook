@@ -5,6 +5,30 @@ import useInterval from './useInterval';
 const WINDOW = 'window';
 const PARENT = 'parent';
 
+function getElementSizes(element) {
+  const parentRect = element.getBoundingClientRect();
+  const { top, bottom, left, right } = parentRect;
+
+  return { top, bottom, left, right };
+}
+
+function isElementInView(element, windowHeight, windowWidth) {
+  if (element) {
+    const { left, right, top, bottom } = getElementSizes(element);
+    if (left > windowWidth) {
+      return false;
+    } else if (right < 0) {
+      return false;
+    } else if (top > windowHeight) {
+      return false;
+    } else if (bottom < 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 function useInfiniteScroll({
   loading,
   hasNextPage,
@@ -28,14 +52,6 @@ function useInfiniteScroll({
     }
   }, [loading]);
 
-  function getParentSizes() {
-    const parentNode = ref.current.parentNode;
-    const parentRect = parentNode.getBoundingClientRect();
-    const { top, bottom, left, right } = parentRect;
-
-    return { top, bottom, left, right };
-  }
-
   function getBottomOffset() {
     const rect = ref.current.getBoundingClientRect();
 
@@ -43,7 +59,7 @@ function useInfiniteScroll({
     let bottomOffset = bottom - windowHeight;
 
     if (scrollContainer === PARENT) {
-      const { bottom: parentBottom } = getParentSizes();
+      const { bottom: parentBottom } = getElementSizes(ref.current.parentNode);
       // Distance between bottom of list and its parent
       bottomOffset = bottom - parentBottom;
     }
@@ -54,20 +70,13 @@ function useInfiniteScroll({
   function isParentInView() {
     const parent = ref.current ? ref.current.parentNode : null;
 
-    if (parent) {
-      const { left, right, top, bottom } = getParentSizes();
-      if (left > windowWidth) {
-        return false;
-      } else if (right < 0) {
-        return false;
-      } else if (top > windowHeight) {
-        return false;
-      } else if (bottom < 0) {
-        return false;
-      }
-    }
+    return isElementInView(parent, windowHeight, windowWidth);
+  }
 
-    return true;
+  function isListInView() {
+    const element = ref.current;
+
+    return isElementInView(element, windowHeight, windowWidth);
   }
 
   function listenBottomOffset() {
@@ -76,6 +85,10 @@ function useInfiniteScroll({
         if (scrollContainer === PARENT) {
           if (!isParentInView()) {
             // Do nothing if the parent is out of screen
+            return;
+          }
+        } else {
+          if (!isListInView()) {
             return;
           }
         }
