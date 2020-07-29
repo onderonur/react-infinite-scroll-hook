@@ -1,4 +1,7 @@
 # react-infinite-scroll-hook
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This is a hook to create infinite scroll components!  
 It has a really basic logic that solved a lot of problems for me. So, I just wanted to publish it as a package.
@@ -71,3 +74,22 @@ function InfiniteList({}) {
 [npm]: https://www.npmjs.org/package/npm-package
 [coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
 [coveralls]: https://coveralls.io/github/user/repo
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://nl.linkedin.com/in/eugef"><img src="https://avatars0.githubusercontent.com/u/895071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Eugene Fidelin</b></sub></a><br /><a href="https://github.com/onderonur/react-infinite-scroll-hook/commits?author=eugef" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
