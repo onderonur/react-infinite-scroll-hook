@@ -44,6 +44,7 @@
     "react": "16.x"
   },
   "devDependencies": {
+    "all-contributors-cli": "^6.17.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-loader": "^2.2.1",
@@ -51,7 +52,7 @@
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-react-hooks": "^1.6.1",
     "gh-pages": "^2.0.1",
-    "nwb": "0.23.x",
+    "nwb": "^0.25.2",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
