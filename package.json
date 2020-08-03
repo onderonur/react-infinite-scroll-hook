@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,7 +26,22 @@
     }
   },
   "name": "react-infinite-scroll-hook",
+  "description": "A simple hook to create infinite scroll components",
   "author": "onderonur",
+  "homepage": "https://onderonur.github.io/react-infinite-scroll-hook",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onderonur/react-infinite-scroll-hook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onderonur/react-infinite-scroll-hook/issues"
+  },
+  "keywords": [
+    "react",
+    "react-hooks",
+    "infinite-scroll",
+    "react-component"
+  ],
   "module": "dist/react-infinite-scroll-hook.esm.js",
   "devDependencies": {
     "@types/react": "^16.9.44",
@@ -45,8 +60,5 @@
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.7"
-  },
-  "dependencies": {
-    "utils": "^0.3.1"
   }
 }

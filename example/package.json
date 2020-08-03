@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --public-url /react-infinite-scroll-hook/",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react-app-polyfill": "^1.0.0",
@@ -20,6 +22,7 @@
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
     "@types/styled-components": "^5.1.2",
+    "gh-pages": "^3.1.0",
     "parcel": "^1.12.3",
     "typescript": "^3.4.5"
   }

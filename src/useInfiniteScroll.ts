@@ -2,15 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import useWindowSize from './useWindowSize';
 import useInterval from './useInterval';
 import { isNullOrUndefined } from './utils';
-import { Maybe } from './types';
-
 export type InfiniteScrollContainer = 'window' | 'parent';
 const WINDOW: InfiniteScrollContainer = 'window';
 const PARENT: InfiniteScrollContainer = 'parent';
 
 type InfiniteContainer = HTMLElement | (Node & ParentNode);
 
-function getElementSizes(element: Maybe<InfiniteContainer>) {
+function getElementSizes(element: InfiniteContainer) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parentRect = (element as any).getBoundingClientRect();
   const { top, bottom, left, right } = parentRect;
@@ -89,7 +87,11 @@ function useInfiniteScroll<T extends HTMLElement>({
     let bottomOffset = bottom - windowHeight;
 
     if (scrollContainer === PARENT) {
-      const { bottom: parentBottom } = getElementSizes(element.parentNode);
+      const parent = element.parentNode;
+      if (!parent) {
+        return null;
+      }
+      const { bottom: parentBottom } = getElementSizes(parent);
       // Distance between bottom of list and its parent
       bottomOffset = bottom - parentBottom;
     }
