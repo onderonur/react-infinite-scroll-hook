@@ -1,6 +1,9 @@
 # react-infinite-scroll-hook
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This is a hook to create infinite scroll components!  
@@ -23,6 +26,8 @@ npm install react-infinite-scroll-hook
 ### Basic Usage
 
 ```javascript
+import useInfiniteScroll from 'react-infinite-scroll-hook';
+
 function InfiniteList({}) {
   const [items, setItems] = useState([]);
   const [hasNextPage, setHasNextPage] = useState();
@@ -32,7 +37,7 @@ function InfiniteList({}) {
   function handleLoadMore() {
     setLoading(true);
     // Some API call to fetch the next page
-    loadNextPage(endCursor, pageSize).then(newPage => {
+    loadNextPage(endCursor, pageSize).then((newPage) => {
       setLoading(false);
       setHasNextPage(newPage.hasNextPage);
       setItems([...items, newPage.items]);
@@ -43,14 +48,14 @@ function InfiniteList({}) {
     loading,
     hasNextPage,
     onLoadMore: handleLoadMore,
-    scrollContainer
+    scrollContainer,
   });
 
   // ...
 
   return (
     <List ref={infiniteRef}>
-      {items.map(item => (
+      {items.map((item) => (
         <ListItem key={item.key}>{item.value}</ListItem>
       ))}
       {loading && <ListItem>Loading...</ListItem>}
@@ -78,6 +83,7 @@ function InfiniteList({}) {
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -89,6 +95,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
