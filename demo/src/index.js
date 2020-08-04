@@ -10,6 +10,11 @@ const ListContainer = styled.div`
   background-color: #e4e4e4;
 `;
 
+const Footer = styled.div`
+  height: 600px;
+  background-color: yellow;
+`;
+
 function Demo() {
   const [scrollParent, setScrollParent] = useState(false);
 
@@ -27,6 +32,7 @@ function Demo() {
       <ListContainer scrollable={scrollParent}>
         <InfiniteList scrollContainer={scrollParent ? 'parent' : 'window'} />
       </ListContainer>
+      <Footer>Footer</Footer>
     </React.Fragment>
   );
 }
