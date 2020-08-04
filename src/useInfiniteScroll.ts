@@ -2,9 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import useWindowSize from './useWindowSize';
 import useInterval from './useInterval';
 import { isNullOrUndefined } from './utils';
+import debounce from 'lodash/debounce';
+
 export type InfiniteScrollContainer = 'window' | 'parent';
 const WINDOW: InfiniteScrollContainer = 'window';
 const PARENT: InfiniteScrollContainer = 'parent';
+
+export enum InfiniteScrollMode {
+  INTERVAL = 'interval',
+  SCROLL_EVENT = 'scrollEvent',
+}
 
 type InfiniteContainer = HTMLElement | (Node & ParentNode);
 
@@ -49,16 +56,22 @@ export interface UseInfiniteScrollArgs {
   checkInterval?: number;
   // May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
   scrollContainer?: InfiniteScrollContainer;
+  // can use scrollEvent mode to detect onLoadMore
+  mode?: InfiniteScrollMode;
 }
 
-function useInfiniteScroll<T extends HTMLElement>({
-  loading,
-  hasNextPage,
-  onLoadMore,
-  threshold = 150,
-  checkInterval = 200,
-  scrollContainer = WINDOW,
-}: UseInfiniteScrollArgs) {
+function useInfiniteScroll<T extends HTMLElement>(
+  props: UseInfiniteScrollArgs,
+) {
+  const {
+    loading,
+    hasNextPage,
+    onLoadMore,
+    threshold = 150,
+    checkInterval = 200,
+    scrollContainer = WINDOW,
+    mode = 'interval',
+  } = props;
   const ref = useRef<T>(null);
   const { height: windowHeight, width: windowWidth } = useWindowSize();
   // Normally we could use the "loading" prop, but when you set "checkInterval" to a very small
@@ -153,12 +166,38 @@ function useInfiniteScroll<T extends HTMLElement>({
     }
   }
 
+  const isScrollEventMode = mode === InfiniteScrollMode.SCROLL_EVENT;
+
+  useEffect(() => {
+    if (!isScrollEventMode) return;
+    const self = ref.current;
+    const parent = props.scrollContainer === PARENT ? self?.parentNode : window;
+
+    if (!ref.current) return;
+
+    const handler = debounce(() => {
+      listenBottomOffset();
+    }, 200);
+    // must call at initial
+    parent?.addEventListener('scroll', handler);
+
+    return () => {
+      parent?.removeEventListener('scroll', handler);
+    };
+  }, [ref.current, props]);
+
+  useEffect(() => {
+    if (isScrollEventMode) {
+      listenBottomOffset();
+    }
+  }, [isScrollEventMode]);
+
   useInterval(
     () => {
       listenBottomOffset();
     },
     // Stop interval when there is no next page.
-    hasNextPage ? checkInterval : 0,
+    hasNextPage && !isScrollEventMode ? checkInterval : 0,
   );
 
   return ref;

@@ -1,5 +1,8 @@
 import * as React from 'react';
-import useInfiniteScroll from '../src';
+import useInfiniteScroll, {
+  InfiniteScrollMode,
+  UseInfiniteScrollArgs,
+} from '../src';
 import styled from 'styled-components';
 
 interface Item {
@@ -25,7 +28,7 @@ const ARRAY_SIZE = 20;
 const RESPONSE_TIME = 1000;
 
 function loadItems(prevArray: Item[] = [], startCursor = 0): Promise<Item[]> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       let newArray = prevArray;
 
@@ -42,13 +45,16 @@ function loadItems(prevArray: Item[] = [], startCursor = 0): Promise<Item[]> {
   });
 }
 
-function InfiniteList({ scrollContainer }) {
+function InfiniteList({
+  scrollContainer,
+  mode = InfiniteScrollMode.INTERVAL,
+}: Partial<UseInfiniteScrollArgs>) {
   const [loading, setLoading] = React.useState(false);
   const [items, setItems] = React.useState<Item[]>([]);
 
   function handleLoadMore() {
     setLoading(true);
-    loadItems(items, items.length).then(newArray => {
+    loadItems(items, items.length).then((newArray) => {
       setLoading(false);
       setItems(newArray);
     });
@@ -61,11 +67,12 @@ function InfiniteList({ scrollContainer }) {
     hasNextPage: true,
     onLoadMore: handleLoadMore,
     scrollContainer,
+    mode,
   });
 
   return (
     <List ref={infiniteRef}>
-      {items.map(item => (
+      {items.map((item) => (
         <ListItem key={item.key}>{item.value}</ListItem>
       ))}
       {loading && <ListItem>Loading...</ListItem>}
