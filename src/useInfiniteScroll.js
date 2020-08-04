@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useWindowSize from './useWindowSize';
-import useInterval from './useInterval';
+import debounce from 'lodash/debounce';
+// import useInterval from './useInterval';
 
 const WINDOW = 'window';
 const PARENT = 'parent';
@@ -93,13 +94,30 @@ function useInfiniteScroll({
     }
   }
 
-  useInterval(
-    () => {
+  // useInterval(
+  //   () => {
+  //     listenBottomOffset();
+  //   },
+  //   // Stop interval when there is no next page.
+  //   hasNextPage ? checkInterval : 0,
+  // );
+
+  useEffect(() => {
+    const self = ref.current;
+    const parent = self && self.parentNode;
+
+    if (!ref.current) return;
+
+    const handler = debounce(() => {
       listenBottomOffset();
-    },
-    // Stop interval when there is no next page.
-    hasNextPage ? checkInterval : 0,
-  );
+    }, 200);
+
+    parent && parent.addEventListener('scroll', handler);
+
+    return () => {
+      parent && parent.removeEventListener('scroll', handler);
+    };
+  }, [ref.current, props]);
 
   return ref;
 }
