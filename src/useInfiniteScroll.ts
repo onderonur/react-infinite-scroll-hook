@@ -80,7 +80,7 @@ function useInfiniteScroll<T extends HTMLElement>(
   // "updateQuery" twice). Thus we set our own "listen" state which immeadiately turns to "false" on
   // calling "onLoadMore".
   const [listen, setListen] = useState(true);
-
+  const [isFull, setIsFull] = useState(0);
   useEffect(() => {
     if (!loading) {
       setListen(true);
@@ -161,6 +161,8 @@ function useInfiniteScroll<T extends HTMLElement>(
         if (validOffset) {
           setListen(false);
           onLoadMore();
+        } else {
+          setIsFull((val) => val + 1);
         }
       }
     }
@@ -186,18 +188,20 @@ function useInfiniteScroll<T extends HTMLElement>(
     };
   }, [ref.current, props]);
 
-  useEffect(() => {
-    if (isScrollEventMode) {
-      listenBottomOffset();
-    }
-  }, [isScrollEventMode]);
+  // useEffect(() => {
+  //   if (isScrollEventMode) {
+  //     listenBottomOffset();
+  //   }
+  // }, [isScrollEventMode]);
 
   useInterval(
     () => {
       listenBottomOffset();
     },
     // Stop interval when there is no next page.
-    hasNextPage && !isScrollEventMode ? checkInterval : 0,
+    (hasNextPage && !isScrollEventMode) || (isScrollEventMode && isFull < 1)
+      ? checkInterval
+      : 0,
   );
 
   return ref;

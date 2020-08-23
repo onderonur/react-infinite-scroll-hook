@@ -23,7 +23,7 @@ const Footer = styled.div`
 
 function App() {
   const [scrollParent, setScrollParent] = React.useState(false);
-  const [scrollMode, setScrollMode] = React.useState(false);
+  const [scrollMode, setScrollMode] = React.useState(true);
 
   function handleChange(e) {
     const checked = e.target.checked;

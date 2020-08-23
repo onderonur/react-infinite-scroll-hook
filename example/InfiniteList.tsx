@@ -24,7 +24,7 @@ const ListItem = styled.li`
   margin: 4px;
 `;
 
-const ARRAY_SIZE = 20;
+const ARRAY_SIZE = 3;
 const RESPONSE_TIME = 1000;
 
 function loadItems(prevArray: Item[] = [], startCursor = 0): Promise<Item[]> {
@@ -59,6 +59,12 @@ function InfiniteList({
       setItems(newArray);
     });
   }
+
+  // React.useEffect(() => {
+  //   if (mode === InfiniteScrollMode.SCROLL_EVENT) {
+  //     handleLoadMore();
+  //   }
+  // }, [mode]);
 
   const infiniteRef = useInfiniteScroll<HTMLUListElement>({
     loading,
