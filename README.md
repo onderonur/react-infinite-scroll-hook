@@ -31,6 +31,8 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 function InfiniteList({}) {
   const [items, setItems] = useState([]);
   const [hasNextPage, setHasNextPage] = useState();
+  const [loading, setLoading] = useState(false);
+
 
   /// ...
 
