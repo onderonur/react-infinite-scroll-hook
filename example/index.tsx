@@ -9,8 +9,8 @@ interface ListContainerProps {
 }
 
 const ListContainer = styled.div<ListContainerProps>`
-  max-height: ${props => (props.scrollable ? '600px' : 'auto')};
-  max-width: ${props => (props.scrollable ? '600px' : 'auto')};
+  max-height: ${(props) => (props.scrollable ? '600px' : 'auto')};
+  max-width: ${(props) => (props.scrollable ? '600px' : 'auto')};
   overflow: auto;
   background-color: #e4e4e4;
 `;

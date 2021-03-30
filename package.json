@@ -60,5 +60,8 @@
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "react-intersection-observer-hook": "^1.0.5"
   }
 }

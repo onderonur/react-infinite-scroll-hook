@@ -25,7 +25,7 @@ const ARRAY_SIZE = 20;
 const RESPONSE_TIME = 1000;
 
 function loadItems(prevArray: Item[] = [], startCursor = 0): Promise<Item[]> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       let newArray = prevArray;
 
@@ -48,28 +48,40 @@ function InfiniteList({ scrollContainer }) {
 
   function handleLoadMore() {
     setLoading(true);
-    loadItems(items, items.length).then(newArray => {
+    loadItems(items, items.length).then((newArray) => {
       setLoading(false);
       setItems(newArray);
     });
   }
 
-  const infiniteRef = useInfiniteScroll<HTMLUListElement>({
+  const [margin, setMargin] = React.useState<string>();
+
+  const infiniteRef = useInfiniteScroll({
     loading,
     // This value is set to "true" for this demo only. You will need to
     // get this value from the API when you request your items.
     hasNextPage: true,
     onLoadMore: handleLoadMore,
-    scrollContainer,
+    rootMargin: margin,
   });
 
   return (
-    <List ref={infiniteRef}>
-      {items.map(item => (
-        <ListItem key={item.key}>{item.value}</ListItem>
-      ))}
-      {loading && <ListItem>Loading...</ListItem>}
-    </List>
+    <>
+      <button
+        onClick={() =>
+          setMargin((currentMargin) => (currentMargin ? undefined : '60000px'))
+        }
+      >
+        {margin ? 'YES' : 'NO'}
+      </button>
+      <List>
+        {items.map((item) => (
+          <ListItem key={item.key}>{item.value}</ListItem>
+        ))}
+        {true && <div ref={infiniteRef}>Sentry</div>}
+        {loading && <ListItem>Loading...</ListItem>}
+      </List>
+    </>
   );
 }
 
