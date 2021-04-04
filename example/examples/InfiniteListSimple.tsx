@@ -38,7 +38,7 @@ function SimpleInfiniteList() {
           ))}
           {/* 
               As long as we have a "next page", we show "Loading" right under the list.
-              When it becomes visible on the screen, or it becomes near, it triggers 'onLoadMore'.
+              When it becomes visible on the screen, or it comes near, it triggers 'onLoadMore'.
               This is our "sentry".
               We can also use another "sentry" which is separated from the "Loading" component like:
                 <div ref={infiniteRef} />
