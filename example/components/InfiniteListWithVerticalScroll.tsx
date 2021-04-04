@@ -22,6 +22,7 @@ function InfiniteListWithVerticalScroll() {
     // It can be reactivated by setting "error" state as undefined.
     disabled: !!error,
     // TODO: rootMargin kullanımı
+    rootMargin: '0px 0px 400px 0px',
   });
 
   return (
@@ -31,15 +32,6 @@ function InfiniteListWithVerticalScroll() {
           {items.map((item) => (
             <ListItem key={item.key}>{item.value}</ListItem>
           ))}
-          {/* 
-              As long as we have a "next page", we show "Loading" right under the list.
-              When it becomes visible on the screen, or it becomes near, it triggers infinite loading.
-              This is our "sentry".
-              We can also use another "sentry" which is separated from the "Loading" component like:
-                <div ref={infiniteRef} />
-                {loading && <ListItem>Loading...</ListItem>}
-              and leave "Loading" without this ref.
-          */}
           {hasNextPage && (
             <ListItem ref={infiniteRef}>
               <Loading />

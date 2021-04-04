@@ -4,26 +4,21 @@ import {
   useTrackVisibility,
 } from 'react-intersection-observer-hook';
 
-// TODO: Rename???
-const WAIT_BEFORE_LOAD_IN_MS = 100;
+const DEFAULT_DELAY_IN_MS = 100;
 
 export interface UseInfiniteScrollArgs {
-  // Some sort of "fetching" info of the request.
+  // Some sort of "is fetching" info of the request.
   loading: boolean;
   // If the list has more items to load.
   hasNextPage: boolean;
-  // The callback function to execute when the threshold is exceeded.
+  // The callback function to execute when the infinite loading is triggered.
   onLoadMore: Function;
-  // // Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.
-  // threshold?: number;
-  // // Frequency to check the dom. Default is 200.
-  // checkInterval?: number;
-  // // May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
-  // scrollContainer?: InfiniteScrollContainer;
+  // TODO: Açıklamalar
   rootMargin?: string;
+  // Flag to stop infinite scrolling. Can be used in case of an error etc too.
   disabled?: boolean;
-  // TODO: Rename??
-  waitBeforeLoadInMs?: number;
+  // TODO: Açıklamalar
+  delayInMs?: number;
 }
 
 // TODO: Bi sebepten çift çalışıo sanırım her run. Bi hem eski versiyondan hem de bundan kontrol et.
@@ -35,7 +30,7 @@ function useInfiniteScroll({
   onLoadMore,
   rootMargin,
   disabled,
-  waitBeforeLoadInMs = WAIT_BEFORE_LOAD_IN_MS,
+  delayInMs = DEFAULT_DELAY_IN_MS,
 }: // TODO: Type
 UseInfiniteScrollArgs): [IntersectionObserverHookRefCallback, any] {
   const [ref, { rootRef, isVisible }] = useTrackVisibility({
@@ -50,12 +45,12 @@ UseInfiniteScrollArgs): [IntersectionObserverHookRefCallback, any] {
       // TODO: Buraya açıklama lazım.
       const timer = setTimeout(() => {
         onLoadMore();
-      }, waitBeforeLoadInMs);
+      }, delayInMs);
       return () => {
         clearTimeout(timer);
       };
     }
-  }, [onLoadMore, shouldLoadMore, waitBeforeLoadInMs]);
+  }, [onLoadMore, shouldLoadMore, delayInMs]);
 
   return [ref, { rootRef }];
 }

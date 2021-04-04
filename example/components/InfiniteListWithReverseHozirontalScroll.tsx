@@ -5,13 +5,12 @@ import { useLoadItems } from '../utils';
 import { List, ListItem, Loading } from './List';
 
 const ListContainer = styled.div`
-  max-height: 500px;
-  max-width: 500px;
+  max-width: 600px;
   overflow: auto;
   background-color: #fafafa;
 `;
 
-function InfiniteListWithReverseVerticalScroll() {
+function InfiniteListWithReverseHozirontalScroll() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
@@ -25,17 +24,16 @@ function InfiniteListWithReverseVerticalScroll() {
   });
 
   const scrollableRootRef = React.useRef<HTMLDivElement | null>(null);
-  const lastScrollDistanceToBottomRef = React.useRef<number>();
+  const lastScrollDistanceToLeftRef = React.useRef<number>();
 
   const reversedItems = React.useMemo(() => [...items].reverse(), [items]);
 
   React.useEffect(() => {
     const scrollableRoot = scrollableRootRef.current;
-    const lastScrollDistanceToBottom =
-      lastScrollDistanceToBottomRef.current ?? 0;
+    const lastScrollDistanceToLeft = lastScrollDistanceToLeftRef.current ?? 0;
     if (scrollableRoot) {
-      scrollableRoot.scrollTop =
-        scrollableRoot.scrollHeight - lastScrollDistanceToBottom;
+      scrollableRoot.scrollLeft =
+        scrollableRoot.scrollWidth - lastScrollDistanceToLeft;
     }
   }, [reversedItems, rootRef]);
 
@@ -50,15 +48,15 @@ function InfiniteListWithReverseVerticalScroll() {
   const handleRootScroll = React.useCallback(() => {
     const rootNode = scrollableRootRef.current;
     if (rootNode) {
-      lastScrollDistanceToBottomRef.current =
-        rootNode.scrollHeight - rootNode.scrollTop;
+      lastScrollDistanceToLeftRef.current =
+        rootNode.scrollWidth - rootNode.scrollLeft;
     }
   }, []);
 
   return (
     <>
       <ListContainer ref={rootRefSetter} onScroll={handleRootScroll}>
-        <List>
+        <List direction="horizontal">
           {hasNextPage && (
             <ListItem ref={infiniteRef}>
               <Loading />
@@ -73,4 +71,4 @@ function InfiniteListWithReverseVerticalScroll() {
   );
 }
 
-export default InfiniteListWithReverseVerticalScroll;
+export default InfiniteListWithReverseHozirontalScroll;

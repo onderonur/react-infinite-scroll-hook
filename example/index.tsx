@@ -6,6 +6,7 @@ import InfiniteListWithVerticalScroll from './components/InfiniteListWithVertica
 import InfiniteListWithHorizontalScroll from './components/InfiniteListWithHorizontalScroll';
 import styled from 'styled-components';
 import InfiniteListWithReverseVerticalScroll from './components/InfiniteListWithReverseVerticalScroll';
+import InfiniteListWithReverseHozirontalScroll from './components/InfiniteListWithReverseHozirontalScroll';
 
 const Label = styled.label`
   font-weight: 600;
@@ -14,16 +15,18 @@ const Label = styled.label`
   }
 `;
 
+// eslint-disable-next-line no-shadow
 enum InfiniteListType {
   SIMPLE,
   VERTICAL_SCROLL,
   HORIZONTAL_SCROLL,
   REVERSE_VERTICAL_SCROLL,
+  REVERSE_HORIZONTAL_SCROLL,
 }
 
 function App() {
   const [listType, setListType] = React.useState<InfiniteListType>(
-    InfiniteListType.REVERSE_VERTICAL_SCROLL,
+    InfiniteListType.SIMPLE,
   );
 
   let InfiniteList;
@@ -37,6 +40,9 @@ function App() {
       break;
     case InfiniteListType.REVERSE_VERTICAL_SCROLL:
       InfiniteList = InfiniteListWithReverseVerticalScroll;
+      break;
+    case InfiniteListType.REVERSE_HORIZONTAL_SCROLL:
+      InfiniteList = InfiniteListWithReverseHozirontalScroll;
       break;
     default:
       InfiniteList = InfiniteListSimple;
@@ -64,6 +70,9 @@ function App() {
           </option>
           <option value={InfiniteListType.REVERSE_VERTICAL_SCROLL}>
             Reversed Vertically Scrollable List
+          </option>
+          <option value={InfiniteListType.REVERSE_HORIZONTAL_SCROLL}>
+            Reversed Horizontally Scrollable List
           </option>
         </select>
       </Label>
