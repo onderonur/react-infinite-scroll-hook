@@ -1,167 +1,65 @@
-import { useEffect, useRef, useState } from 'react';
-import useWindowSize from './useWindowSize';
-import useInterval from './useInterval';
-import { isNullOrUndefined } from './utils';
-export type InfiniteScrollContainer = 'window' | 'parent';
-const WINDOW: InfiniteScrollContainer = 'window';
-const PARENT: InfiniteScrollContainer = 'parent';
+import { useEffect } from 'react';
+import {
+  useTrackVisibility,
+  IntersectionObserverHookRefCallback,
+  IntersectionObserverHookRootRefCallback,
+} from 'react-intersection-observer-hook';
 
-type InfiniteContainer = HTMLElement | (Node & ParentNode);
+const DEFAULT_DELAY_IN_MS = 100;
 
-function getElementSizes(element: InfiniteContainer) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const parentRect = (element as any).getBoundingClientRect();
-  const { top, bottom, left, right } = parentRect;
-  return { top, bottom, left, right };
-}
+export type UseInfiniteScrollHookResult = [
+  IntersectionObserverHookRefCallback,
+  { rootRef: IntersectionObserverHookRootRefCallback },
+];
 
-function isElementInView(
-  element: InfiniteContainer,
-  windowHeight: number,
-  windowWidth: number,
-) {
-  if (element) {
-    const { left, right, top, bottom } = getElementSizes(element);
-    if (left > windowWidth) {
-      return false;
-    } else if (right < 0) {
-      return false;
-    } else if (top > windowHeight) {
-      return false;
-    } else if (bottom < 0) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-export interface UseInfiniteScrollArgs {
-  // Some sort of "fetching" info of the request.
+export interface UseInfiniteScrollHookArgs {
+  // Some sort of "is fetching" info of the request.
   loading: boolean;
   // If the list has more items to load.
   hasNextPage: boolean;
-  // The callback function to execute when the threshold is exceeded.
+  // The callback function to execute when the 'onLoadMore' is triggered.
   onLoadMore: Function;
-  // Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.
-  threshold?: number;
-  // Frequency to check the dom. Default is 200.
-  checkInterval?: number;
-  // May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
-  scrollContainer?: InfiniteScrollContainer;
+  // We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'.
+  rootMargin?: string;
+  // Flag to stop infinite scrolling. Can be used in case of an error etc too.
+  disabled?: boolean;
+  // How long it should wait before triggering 'onLoadMore'.
+  delayInMs?: number;
 }
 
-function useInfiniteScroll<T extends HTMLElement>({
+function useInfiniteScroll({
   loading,
   hasNextPage,
   onLoadMore,
-  threshold = 150,
-  checkInterval = 200,
-  scrollContainer = WINDOW,
-}: UseInfiniteScrollArgs) {
-  const ref = useRef<T>(null);
-  const { height: windowHeight, width: windowWidth } = useWindowSize();
-  // Normally we could use the "loading" prop, but when you set "checkInterval" to a very small
-  // number (like 10 etc.), some request components can't set its loading state
-  // immediately (I had this problem with react-apollo's Query component. In some cases, it runs
-  // "updateQuery" twice). Thus we set our own "listen" state which immeadiately turns to "false" on
-  // calling "onLoadMore".
-  const [listen, setListen] = useState(true);
+  rootMargin,
+  disabled,
+  delayInMs = DEFAULT_DELAY_IN_MS,
+}: UseInfiniteScrollHookArgs): UseInfiniteScrollHookResult {
+  const [ref, { rootRef, isVisible }] = useTrackVisibility({
+    rootMargin,
+  });
 
+  const shouldLoadMore = !disabled && !loading && isVisible && hasNextPage;
+
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (!loading) {
-      setListen(true);
+    if (shouldLoadMore) {
+      // When we trigger 'onLoadMore' and new items are added to the list,
+      // right before they become rendered on the screen, 'loading' becomes false
+      // and 'isVisible' can be true for a brief time, based on the scroll position.
+      // So, it triggers 'onLoadMore' just after the first one is finished.
+      // We use a small delay here to prevent this kind of situations.
+      // It can be configured by hook args.
+      const timer = setTimeout(() => {
+        onLoadMore();
+      }, delayInMs);
+      return () => {
+        clearTimeout(timer);
+      };
     }
-  }, [loading]);
+  }, [onLoadMore, shouldLoadMore, delayInMs]);
 
-  function getBottomOffset() {
-    const element = ref.current;
-
-    if (!element || isNullOrUndefined(windowHeight)) {
-      return null;
-    }
-
-    const rect = element.getBoundingClientRect();
-
-    const bottom = rect.bottom;
-    let bottomOffset = bottom - windowHeight;
-
-    if (scrollContainer === PARENT) {
-      const parent = element.parentNode;
-      if (!parent) {
-        return null;
-      }
-      const { bottom: parentBottom } = getElementSizes(parent);
-      // Distance between bottom of list and its parent
-      bottomOffset = bottom - parentBottom;
-    }
-
-    return bottomOffset;
-  }
-
-  function isParentInView() {
-    const parent = ref.current?.parentNode;
-    if (
-      !parent ||
-      isNullOrUndefined(windowHeight) ||
-      isNullOrUndefined(windowWidth)
-    ) {
-      return false;
-    }
-    return isElementInView(parent, windowHeight, windowWidth);
-  }
-
-  function isListInView() {
-    const element = ref.current;
-    if (
-      !element ||
-      isNullOrUndefined(windowHeight) ||
-      isNullOrUndefined(windowWidth)
-    ) {
-      return false;
-    }
-    return isElementInView(element, windowHeight, windowWidth);
-  }
-
-  function listenBottomOffset() {
-    if (listen && !loading && hasNextPage) {
-      if (ref.current) {
-        if (scrollContainer === PARENT) {
-          if (!isParentInView()) {
-            // Do nothing if the parent is out of screen
-            return;
-          }
-        } else if (!isListInView()) {
-          return;
-        }
-
-        // Check if the distance between bottom of the container and bottom of the window or parent
-        // is less than "threshold"
-        const bottomOffset = getBottomOffset();
-
-        if (isNullOrUndefined(bottomOffset)) {
-          return;
-        }
-
-        const validOffset = bottomOffset < threshold;
-
-        if (validOffset) {
-          setListen(false);
-          onLoadMore();
-        }
-      }
-    }
-  }
-
-  useInterval(
-    () => {
-      listenBottomOffset();
-    },
-    // Stop interval when there is no next page.
-    hasNextPage ? checkInterval : 0,
-  );
-
-  return ref;
+  return [ref, { rootRef }];
 }
 
 export default useInfiniteScroll;
