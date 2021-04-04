@@ -1,5 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useIntersectionObserver } from 'react-intersection-observer-hook';
+import { useEffect } from 'react';
+import {
+  IntersectionObserverHookRefCallback,
+  useTrackVisibility,
+} from 'react-intersection-observer-hook';
+
+// TODO: Rename???
+const WAIT_BEFORE_LOAD_IN_MS = 100;
 
 export interface UseInfiniteScrollArgs {
   // Some sort of "fetching" info of the request.
@@ -15,41 +21,43 @@ export interface UseInfiniteScrollArgs {
   // // May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
   // scrollContainer?: InfiniteScrollContainer;
   rootMargin?: string;
+  disabled?: boolean;
+  // TODO: Rename??
+  waitBeforeLoadInMs?: number;
 }
+
+// TODO: Bi sebepten çift çalışıo sanırım her run. Bi hem eski versiyondan hem de bundan kontrol et.
+// En olmadı throttle, debouncer vs olabilir belki.
 
 function useInfiniteScroll({
   loading,
   hasNextPage,
   onLoadMore,
   rootMargin,
-}: UseInfiniteScrollArgs) {
-  const [ref, { entry }] = useIntersectionObserver({
+  disabled,
+  waitBeforeLoadInMs = WAIT_BEFORE_LOAD_IN_MS,
+}: // TODO: Type
+UseInfiniteScrollArgs): [IntersectionObserverHookRefCallback, any] {
+  const [ref, { rootRef, isVisible }] = useTrackVisibility({
     rootMargin,
   });
-  const isIntersecting = entry?.isIntersecting;
 
-  // Normally we could use the "loading" prop, but when you set "checkInterval" to a very small
-  // number (like 10 etc.), some request components can't set its loading state
-  // immediately (I had this problem with react-apollo's Query component. In some cases, it runs
-  // "updateQuery" twice). Thus we set our own "listen" state which immeadiately turns to "false" on
-  // calling "onLoadMore".
-  const [listen, setListen] = useState(true);
+  const shouldLoadMore = !disabled && !loading && isVisible && hasNextPage;
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (!loading) {
-      setListen(true);
+    if (shouldLoadMore) {
+      // TODO: Buraya açıklama lazım.
+      const timer = setTimeout(() => {
+        onLoadMore();
+      }, waitBeforeLoadInMs);
+      return () => {
+        clearTimeout(timer);
+      };
     }
-  }, [loading]);
+  }, [onLoadMore, shouldLoadMore, waitBeforeLoadInMs]);
 
-  useEffect(() => {
-    console.log(listen, isIntersecting, hasNextPage);
-    if (listen && isIntersecting && hasNextPage) {
-      setListen(false);
-      onLoadMore();
-    }
-  }, [listen, isIntersecting, hasNextPage, onLoadMore]);
-
-  return ref;
+  return [ref, { rootRef }];
 }
 
 export default useInfiniteScroll;

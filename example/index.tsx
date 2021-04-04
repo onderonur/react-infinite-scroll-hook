@@ -1,44 +1,74 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import InfiniteList from './InfiniteList';
+import InfiniteListSimple from './components/InfiniteListSimple';
+import InfiniteListWithVerticalScroll from './components/InfiniteListWithVerticalScroll';
+import InfiniteListWithHorizontalScroll from './components/InfiniteListWithHorizontalScroll';
 import styled from 'styled-components';
+import InfiniteListWithReverseVerticalScroll from './components/InfiniteListWithReverseVerticalScroll';
 
-interface ListContainerProps {
-  scrollable: boolean;
+const Label = styled.label`
+  font-weight: 600;
+  > * {
+    margin-left: 8px;
+  }
+`;
+
+enum InfiniteListType {
+  SIMPLE,
+  VERTICAL_SCROLL,
+  HORIZONTAL_SCROLL,
+  REVERSE_VERTICAL_SCROLL,
 }
 
-const ListContainer = styled.div<ListContainerProps>`
-  max-height: ${(props) => (props.scrollable ? '600px' : 'auto')};
-  max-width: ${(props) => (props.scrollable ? '600px' : 'auto')};
-  overflow: auto;
-  background-color: #e4e4e4;
-`;
-
-const Footer = styled.div`
-  height: 600px;
-  background-color: yellow;
-`;
-
 function App() {
-  const [scrollParent, setScrollParent] = React.useState(false);
+  const [listType, setListType] = React.useState<InfiniteListType>(
+    InfiniteListType.REVERSE_VERTICAL_SCROLL,
+  );
 
-  function handleChange(e) {
-    const checked = e.target.checked;
-    setScrollParent(checked);
+  let InfiniteList;
+
+  switch (listType) {
+    case InfiniteListType.VERTICAL_SCROLL:
+      InfiniteList = InfiniteListWithVerticalScroll;
+      break;
+    case InfiniteListType.HORIZONTAL_SCROLL:
+      InfiniteList = InfiniteListWithHorizontalScroll;
+      break;
+    case InfiniteListType.REVERSE_VERTICAL_SCROLL:
+      InfiniteList = InfiniteListWithReverseVerticalScroll;
+      break;
+    default:
+      InfiniteList = InfiniteListSimple;
   }
 
   return (
-    <React.Fragment>
+    <>
       <h1>Infinite List</h1>
       <h3>Created by using “react-infinite-scroll-hook”</h3>
-      <input type="checkbox" checked={scrollParent} onChange={handleChange} />
-      Scrollable Parent
-      <ListContainer scrollable={scrollParent}>
-        <InfiniteList scrollContainer={scrollParent ? 'parent' : 'window'} />
-      </ListContainer>
-      <Footer>Footer</Footer>
-    </React.Fragment>
+      <Label htmlFor="listType">
+        List Type
+        <select
+          id="listType"
+          value={listType}
+          onChange={(e) => {
+            setListType(parseInt(e.target.value));
+          }}
+        >
+          <option value={InfiniteListType.SIMPLE}>Simple List</option>
+          <option value={InfiniteListType.VERTICAL_SCROLL}>
+            Vertically Scrollable List
+          </option>
+          <option value={InfiniteListType.HORIZONTAL_SCROLL}>
+            Horizontally Scrollable List
+          </option>
+          <option value={InfiniteListType.REVERSE_VERTICAL_SCROLL}>
+            Reversed Vertically Scrollable List
+          </option>
+        </select>
+      </Label>
+      <InfiniteList />
+    </>
   );
 }
 
