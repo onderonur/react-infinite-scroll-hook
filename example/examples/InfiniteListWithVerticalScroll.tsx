@@ -23,20 +23,18 @@ function InfiniteListWithVerticalScroll() {
   });
 
   return (
-    <>
-      <ListContainer ref={rootRef}>
-        <List>
-          {items.map((item) => (
-            <ListItem key={item.key}>{item.value}</ListItem>
-          ))}
-          {hasNextPage && (
-            <ListItem ref={infiniteRef}>
-              <Loading />
-            </ListItem>
-          )}
-        </List>
-      </ListContainer>
-    </>
+    <ListContainer ref={rootRef}>
+      <List>
+        {items.map((item) => (
+          <ListItem key={item.key}>{item.value}</ListItem>
+        ))}
+        {hasNextPage && (
+          <ListItem ref={infiniteRef}>
+            <Loading />
+          </ListItem>
+        )}
+      </List>
+    </ListContainer>
   );
 }
 

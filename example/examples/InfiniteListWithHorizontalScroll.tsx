@@ -22,20 +22,18 @@ function InfiniteListWithHorizontalScroll() {
   });
 
   return (
-    <>
-      <ListContainer ref={rootRef}>
-        <List direction="horizontal">
-          {items.map((item) => (
-            <ListItem key={item.key}>{item.value}</ListItem>
-          ))}
-          {hasNextPage && (
-            <ListItem ref={infiniteRef}>
-              <Loading />
-            </ListItem>
-          )}
-        </List>
-      </ListContainer>
-    </>
+    <ListContainer ref={rootRef}>
+      <List direction="horizontal">
+        {items.map((item) => (
+          <ListItem key={item.key}>{item.value}</ListItem>
+        ))}
+        {hasNextPage && (
+          <ListItem ref={infiniteRef}>
+            <Loading />
+          </ListItem>
+        )}
+      </List>
+    </ListContainer>
   );
 }
 

@@ -53,20 +53,18 @@ function InfiniteListWithReverseHozirontalScroll() {
   }, []);
 
   return (
-    <>
-      <ListContainer ref={rootRefSetter} onScroll={handleRootScroll}>
-        <List direction="horizontal">
-          {hasNextPage && (
-            <ListItem ref={infiniteRef}>
-              <Loading />
-            </ListItem>
-          )}
-          {reversedItems.map((item) => (
-            <ListItem key={item.key}>{item.value}</ListItem>
-          ))}
-        </List>
-      </ListContainer>
-    </>
+    <ListContainer ref={rootRefSetter} onScroll={handleRootScroll}>
+      <List direction="horizontal">
+        {hasNextPage && (
+          <ListItem ref={infiniteRef}>
+            <Loading />
+          </ListItem>
+        )}
+        {reversedItems.map((item) => (
+          <ListItem key={item.key}>{item.value}</ListItem>
+        ))}
+      </List>
+    </ListContainer>
   );
 }
 
