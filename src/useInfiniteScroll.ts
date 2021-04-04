@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import {
   useTrackVisibility,
+  IntersectionObserverHookArgs,
   IntersectionObserverHookRefCallback,
   IntersectionObserverHookRootRefCallback,
 } from 'react-intersection-observer-hook';
@@ -12,7 +13,11 @@ export type UseInfiniteScrollHookResult = [
   { rootRef: IntersectionObserverHookRootRefCallback },
 ];
 
-export interface UseInfiniteScrollHookArgs {
+export type UseInfiniteScrollHookArgs = Pick<
+  IntersectionObserverHookArgs,
+  // We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'.
+  'rootMargin'
+> & {
   // Some sort of "is fetching" info of the request.
   loading: boolean;
   // If the list has more items to load.
@@ -20,13 +25,11 @@ export interface UseInfiniteScrollHookArgs {
   // The callback function to execute when the 'onLoadMore' is triggered.
   // eslint-disable-next-line no-undef
   onLoadMore: VoidFunction;
-  // We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'.
-  rootMargin?: string;
   // Flag to stop infinite scrolling. Can be used in case of an error etc too.
   disabled?: boolean;
   // How long it should wait before triggering 'onLoadMore'.
   delayInMs?: number;
-}
+};
 
 function useInfiniteScroll({
   loading,
