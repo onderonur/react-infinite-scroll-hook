@@ -1,13 +1,15 @@
 # react-infinite-scroll-hook
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This is a hook to create infinite scroll components!  
-**Live demo is [here](https://onderonur.github.io/react-infinite-scroll-hook/).**  
+**Live demo is [here](https://onderonur.github.io/react-infinite-scroll-hook/).**
 
-Before **v4**, `useInfiniteScroll` hook would basically check the DOM with an interval and look at the distance between the bottom of your "infinite" component and the bottom of the window. This was a simple solution. But it had its difficulties. It was not so easy to change the layout of your "infinite" component (like creating a chat message box with inverted scrolling etc). It was a requirement to modify the package based on each different use case. 
+Before **v4**, `useInfiniteScroll` hook would basically check the DOM with an interval and look at the distance between the bottom of your "infinite" component and the bottom of the window. This was a simple solution. But it had its difficulties. It was not so easy to change the layout of your "infinite" component (like creating a chat message box with inverted scrolling etc). It was a requirement to modify the package based on each different use case.
 
 And also, checking the DOM with an interval by using `setInterval` wasn't a sophisticated solution. It was enough, but it had it's limits.
 With **v4**, we migrated to use `IntersectionObserver` and created a much more flexible API to support different design. Basically, now we have a little bit more [inversion of control](https://kentcdodds.com/blog/inversion-of-control).
@@ -70,6 +72,7 @@ function SimpleInfiniteList() {
 ```
 
 Or if we have a scrollable container and we want to use it as our "list container" instead of `document`, we just need to use `rootRef` like:
+
 ```js
 function InfiniteListWithVerticalScroll() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
@@ -83,7 +86,7 @@ function InfiniteListWithVerticalScroll() {
   });
 
   return (
-    <ListContainer 
+    <ListContainer
       // This where we set our scrollable root component.
       ref={rootRef}
     >
@@ -105,14 +108,15 @@ function InfiniteListWithVerticalScroll() {
 You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
 
 ## Arguments
-| Name        | Description | Type | Optional | Default Value |
-| ----------- | ----------- | ---- | -------- | ------------- |
-| loading     | Some sort of "is fetching" info of the request. | boolean | ❌ | |
-| hasNextPage | If the list has more items to load. | boolean | ❌ | |
-| onLoadMore | The callback function to execute when the 'onLoadMore' is triggered. | VoidFunction | ❌ | |
-| rootMargin | We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'. | string | ✅ | |
-| disabled | Flag to stop infinite scrolling. Can be used in case of an error etc too. | boolean | ✅ | |
-| delayInMs | How long it should wait before triggering 'onLoadMore'. | number | ✅ | 100 |
+
+| Name        | Description                                                                                      | Type         | Optional | Default Value |
+| ----------- | ------------------------------------------------------------------------------------------------ | ------------ | -------- | ------------- |
+| loading     | Some sort of "is fetching" info of the request.                                                  | boolean      | ❌       |               |
+| hasNextPage | If the list has more items to load.                                                              | boolean      | ❌       |               |
+| onLoadMore  | The callback function to execute when the 'onLoadMore' is triggered.                             | VoidFunction | ❌       |               |
+| rootMargin  | We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'. | string       | ✅       |               |
+| disabled    | Flag to stop infinite scrolling. Can be used in case of an error etc too.                        | boolean      | ✅       |               |
+| delayInMs   | How long it should wait before triggering 'onLoadMore'.                                          | number       | ✅       | 100           |
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
