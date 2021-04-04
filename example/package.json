@@ -12,8 +12,7 @@
   "dependencies": {
     "components": "^0.1.0",
     "react-app-polyfill": "^2.0.0",
-    "styled-components": "^5.2.3",
-    "utils": "^0.3.1"
+    "styled-components": "^5.2.3"
   },
   "alias": {
     "react": "../node_modules/react",
