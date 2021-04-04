@@ -24,57 +24,95 @@ If you want to use the older version which is using `setInterval`, you can find 
 npm install react-infinite-scroll-hook
 ```
 
-### Basic Usage
+### Simple Example
 
 ```javascript
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 
-function InfiniteList({}) {
-  const [items, setItems] = useState([]);
-  const [hasNextPage, setHasNextPage] = useState();
-  const [loading, setLoading] = useState(false);
+function SimpleInfiniteList() {
+  const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
-
-  /// ...
-
-  function handleLoadMore() {
-    setLoading(true);
-    // Some API call to fetch the next page
-    loadNextPage(endCursor, pageSize).then((newPage) => {
-      setLoading(false);
-      setHasNextPage(newPage.hasNextPage);
-      setItems([...items, newPage.items]);
-    });
-  }
-
-  const infiniteRef = useInfiniteScroll({
+  const [infiniteRef] = useInfiniteScroll({
     loading,
     hasNextPage,
-    onLoadMore: handleLoadMore,
-    scrollContainer,
+    onLoadMore: loadMore,
+    // When there is an error, we stop infinite loading.
+    // It can be reactivated by setting "error" state as undefined.
+    disabled: !!error,
+    // `rootMargin` is passed to `IntersectionObserver`.
+    // We can use it to trigger 'onLoadMore' when the sentry comes near to become
+    // visible, instead of becoming fully visible on the screen.
+    rootMargin: '0px 0px 400px 0px',
   });
 
-  // ...
-
   return (
-    <List ref={infiniteRef}>
+    <List>
       {items.map((item) => (
         <ListItem key={item.key}>{item.value}</ListItem>
       ))}
-      {loading && <ListItem>Loading...</ListItem>}
+      {/* 
+          As long as we have a "next page", we show "Loading" right under the list.
+          When it becomes visible on the screen, or it comes near, it triggers 'onLoadMore'.
+          This is our "sentry".
+          We can also use another "sentry" which is separated from the "Loading" component like:
+            <div ref={infiniteRef} />
+            {loading && <ListItem>Loading...</ListItem>}
+          and leave "Loading" without this ref.
+      */}
+      {hasNextPage && (
+        <ListItem ref={infiniteRef}>
+          <Loading />
+        </ListItem>
+      )}
     </List>
   );
 }
 ```
 
-### Props
+Or if we have a scrollable container and we want to use it as our "list container" instead of `document`, we just need to use `rootRef` like:
+```js
+function InfiniteListWithVerticalScroll() {
+  const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
-- **loading:** Some sort of "fetching" info of the request.
-- **hasNextPage:** If the list has more items to load.
-- **onLoadMore:** The callback function to execute when the threshold is exceeded.
-- **threshold:** Maximum distance to bottom of the window/parent to trigger the callback. Default is 150.
-- **checkInterval:** Frequency to check the dom. Default is 200.
-- **scrollContainer:** May be `"window"` or `"parent"`. Default is `"window"`. If you want to use a scrollable parent for the infinite list, use `"parent"`.
+  const [infiniteRef, { rootRef }] = useInfiniteScroll({
+    loading,
+    hasNextPage,
+    onLoadMore: loadMore,
+    disabled: !!error,
+    rootMargin: '0px 0px 400px 0px',
+  });
+
+  return (
+    <ListContainer 
+      // This where we set our scrollable root component.
+      ref={rootRef}
+    >
+      <List>
+        {items.map((item) => (
+          <ListItem key={item.key}>{item.value}</ListItem>
+        ))}
+        {hasNextPage && (
+          <ListItem ref={infiniteRef}>
+            <Loading />
+          </ListItem>
+        )}
+      </List>
+    </ListContainer>
+  );
+}
+```
+
+You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
+
+## Arguments
+| Name        | Description | Type | Optional | Default Value |
+| ----------- | ----------- | ---- | -------- | ------------- |
+| loading     | Some sort of "is fetching" info of the request. | boolean | ❌ | |
+| hasNextPage | If the list has more items to load. | boolean | ❌ | |
+| onLoadMore | The callback function to execute when the 'onLoadMore' is triggered. | VoidFunction | ❌ | |
+| rootMargin | We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'. | string | ✅ | |
+| disabled | Flag to stop infinite scrolling. Can be used in case of an error etc too. | boolean | ✅ | |
+| delayInMs | How long it should wait before triggering 'onLoadMore'. | number | ✅ | 100 |
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
