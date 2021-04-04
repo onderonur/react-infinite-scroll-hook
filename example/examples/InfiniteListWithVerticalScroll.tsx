@@ -18,8 +18,6 @@ function InfiniteListWithVerticalScroll() {
     loading,
     hasNextPage,
     onLoadMore: loadMore,
-    // When there is an error, we stop infinite loading.
-    // It can be reactivated by setting "error" state as undefined.
     disabled: !!error,
     rootMargin: '0px 0px 400px 0px',
   });
