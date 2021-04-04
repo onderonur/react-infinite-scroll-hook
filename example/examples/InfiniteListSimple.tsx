@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import useInfiniteScroll from '../../src';
 import { useLoadItems } from '../utils';
-import { List, ListItem, Loading } from './List';
+import { List, ListItem, Loading } from '../components/List';
 
 const ListContainer = styled.div`
   background-color: #fafafa;
@@ -23,7 +23,7 @@ function SimpleInfiniteList() {
     // When there is an error, we stop infinite loading.
     // It can be reactivated by setting "error" state as undefined.
     disabled: !!error,
-    // TODO: rootMargin kullanımı
+    rootMargin: '0px 0px 400px 0px',
   });
 
   return (
@@ -35,7 +35,7 @@ function SimpleInfiniteList() {
           ))}
           {/* 
               As long as we have a "next page", we show "Loading" right under the list.
-              When it becomes visible on the screen, or it becomes near, it triggers infinite loading.
+              When it becomes visible on the screen, or it becomes near, it triggers 'onLoadMore'.
               This is our "sentry".
               We can also use another "sentry" which is separated from the "Loading" component like:
                 <div ref={infiniteRef} />

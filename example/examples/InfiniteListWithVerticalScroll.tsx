@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import useInfiniteScroll from '../../src';
 import { useLoadItems } from '../utils';
-import { List, ListItem, Loading } from './List';
+import { List, ListItem, Loading } from '../components/List';
 
 const ListContainer = styled.div`
   max-height: 500px;
@@ -21,7 +21,6 @@ function InfiniteListWithVerticalScroll() {
     // When there is an error, we stop infinite loading.
     // It can be reactivated by setting "error" state as undefined.
     disabled: !!error,
-    // TODO: rootMargin kullanımı
     rootMargin: '0px 0px 400px 0px',
   });
 

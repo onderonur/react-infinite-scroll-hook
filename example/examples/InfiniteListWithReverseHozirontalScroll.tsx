@@ -2,40 +2,37 @@ import * as React from 'react';
 import styled from 'styled-components';
 import useInfiniteScroll from '../../src';
 import { useLoadItems } from '../utils';
-import { List, ListItem, Loading } from './List';
+import { List, ListItem, Loading } from '../components/List';
 
 const ListContainer = styled.div`
-  max-height: 500px;
-  max-width: 500px;
+  max-width: 600px;
   overflow: auto;
   background-color: #fafafa;
 `;
 
-function InfiniteListWithReverseVerticalScroll() {
+function InfiniteListWithReverseHozirontalScroll() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: loadMore,
-    // When there is an error, we stop infinite loading.
-    // It can be reactivated by setting "error" state as undefined.
     disabled: !!error,
-    // TODO: rootMargin kullanımı
+    rootMargin: '0px 0px 0px 400px',
   });
 
   const scrollableRootRef = React.useRef<HTMLDivElement | null>(null);
-  const lastScrollDistanceToBottomRef = React.useRef<number>();
+  const lastScrollDistanceToRightRef = React.useRef<number>();
 
   const reversedItems = React.useMemo(() => [...items].reverse(), [items]);
 
+  // We keep the scroll position when new items are added etc.
   React.useEffect(() => {
     const scrollableRoot = scrollableRootRef.current;
-    const lastScrollDistanceToBottom =
-      lastScrollDistanceToBottomRef.current ?? 0;
+    const lastScrollDistanceToRight = lastScrollDistanceToRightRef.current ?? 0;
     if (scrollableRoot) {
-      scrollableRoot.scrollTop =
-        scrollableRoot.scrollHeight - lastScrollDistanceToBottom;
+      scrollableRoot.scrollLeft =
+        scrollableRoot.scrollWidth - lastScrollDistanceToRight;
     }
   }, [reversedItems, rootRef]);
 
@@ -50,15 +47,15 @@ function InfiniteListWithReverseVerticalScroll() {
   const handleRootScroll = React.useCallback(() => {
     const rootNode = scrollableRootRef.current;
     if (rootNode) {
-      lastScrollDistanceToBottomRef.current =
-        rootNode.scrollHeight - rootNode.scrollTop;
+      const scrollDistanceToRight = rootNode.scrollWidth - rootNode.scrollLeft;
+      lastScrollDistanceToRightRef.current = scrollDistanceToRight;
     }
   }, []);
 
   return (
     <>
       <ListContainer ref={rootRefSetter} onScroll={handleRootScroll}>
-        <List>
+        <List direction="horizontal">
           {hasNextPage && (
             <ListItem ref={infiniteRef}>
               <Loading />
@@ -73,4 +70,4 @@ function InfiniteListWithReverseVerticalScroll() {
   );
 }
 
-export default InfiniteListWithReverseVerticalScroll;
+export default InfiniteListWithReverseHozirontalScroll;

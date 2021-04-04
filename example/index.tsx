@@ -1,12 +1,12 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import InfiniteListSimple from './components/InfiniteListSimple';
-import InfiniteListWithVerticalScroll from './components/InfiniteListWithVerticalScroll';
-import InfiniteListWithHorizontalScroll from './components/InfiniteListWithHorizontalScroll';
 import styled from 'styled-components';
-import InfiniteListWithReverseVerticalScroll from './components/InfiniteListWithReverseVerticalScroll';
-import InfiniteListWithReverseHozirontalScroll from './components/InfiniteListWithReverseHozirontalScroll';
+import InfiniteListSimple from './examples/InfiniteListSimple';
+import InfiniteListWithVerticalScroll from './examples/InfiniteListWithVerticalScroll';
+import InfiniteListWithHorizontalScroll from './examples/InfiniteListWithHorizontalScroll';
+import InfiniteListWithReverseVerticalScroll from './examples/InfiniteListWithReverseVerticalScroll';
+import InfiniteListWithReverseHozirontalScroll from './examples/InfiniteListWithReverseHozirontalScroll';
 
 const Label = styled.label`
   font-weight: 600;

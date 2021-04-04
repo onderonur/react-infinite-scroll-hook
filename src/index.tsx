@@ -1,5 +1,8 @@
-import useInfiniteScroll, { UseInfiniteScrollArgs } from './useInfiniteScroll';
+import useInfiniteScroll, {
+  UseInfiniteScrollHookArgs,
+  UseInfiniteScrollHookResult,
+} from './useInfiniteScroll';
 
-export { UseInfiniteScrollArgs };
+export { UseInfiniteScrollHookArgs, UseInfiniteScrollHookResult };
 
 export default useInfiniteScroll;
