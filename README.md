@@ -105,9 +105,10 @@ function InfiniteListWithVerticalScroll() {
 }
 ```
 
+### Other Examples
 You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
 
-## Arguments
+### Arguments
 
 | Name        | Description                                                                                      | Type         | Optional | Default Value |
 | ----------- | ------------------------------------------------------------------------------------------------ | ------------ | -------- | ------------- |
