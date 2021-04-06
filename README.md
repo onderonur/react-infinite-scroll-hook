@@ -119,7 +119,7 @@ You can find different layout examples **[here](https://github.com/onderonur/rea
 | onLoadMore  | The callback function to execute when the 'onLoadMore' is triggered.                             | VoidFunction | ❌       |               |
 | rootMargin  | We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'. | string       | ✅       |               |
 | disabled    | Flag to stop infinite scrolling. Can be used in case of an error etc too.                        | boolean      | ✅       |               |
-| delayInMs   | How long it should wait before triggering 'onLoadMore'.                                          | number       | ✅       | 100           |
+| delayInMs   | How long it should wait before triggering 'onLoadMore' (in milliseconds).                        | number       | ✅       | 100           |
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
