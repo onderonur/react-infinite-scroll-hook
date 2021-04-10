@@ -15,15 +15,10 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint --fix",
-    "prepare": "tsdx build"
+    "prepare": "tsdx build && husky install"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
   },
   "name": "react-infinite-scroll-hook",
   "description": "A simple hook to create infinite scroll components",
