@@ -15,7 +15,7 @@ Basically, we need to set a `sentry` component to trigger infinite loading. When
 
 `sentry` should be some component which will **not** be unmounted as long as we want to keep the infinite scrolling observer **active**. For example, we can use a "loading" indicator as our sentry. The trick is, because that we want to keep the infinite scrolling observer active as long as there is a **next page**, we need to keep this "loading" component mounted even if we don't have a `loading` flag as `true`. This will also keep our layout more consistent and prevent flickering etc.
 
-We don't need to use a "loading" component as the `sentry` and we can keep them separate too. It can be anything like some empty `div` or last item of your list etc. We just need to place it based on our scrolling direction (to bottom if we want to trigger loading when we scroll to bottom, to top if we want to trigger it when we scroll to top like a chat message box etc. Same approach can be used with horizontal scrolling too.)
+We don't need to use a "loading" component as the `sentry` and we can keep them separate too. It can be anything like some empty `div` or last item of your list etc. We just need to place it based on our scrolling direction. To bottom if we want to trigger loading when we scroll to bottom, to top if we want to trigger it when we scroll to top like a chat message box etc. Same approach can be used with horizontal scrolling too.
 
 Please check below to find examples with different layouts and libraries.
 
