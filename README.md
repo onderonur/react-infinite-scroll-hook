@@ -63,7 +63,7 @@ function SimpleInfiniteList() {
             {loading && <ListItem>Loading...</ListItem>}
           and leave "Loading" without this ref.
       */}
-      {hasNextPage && (
+      {(loading || hasNextPage) && (
         <ListItem ref={infiniteRef}>
           <Loading />
         </ListItem>
@@ -96,7 +96,7 @@ function InfiniteListWithVerticalScroll() {
         {items.map((item) => (
           <ListItem key={item.key}>{item.value}</ListItem>
         ))}
-        {hasNextPage && (
+        {(loading || hasNextPage) && (
           <ListItem ref={infiniteRef}>
             <Loading />
           </ListItem>
