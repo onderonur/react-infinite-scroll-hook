@@ -36,7 +36,7 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 function SimpleInfiniteList() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
-  const [infiniteRef] = useInfiniteScroll({
+  const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: loadMore,
@@ -59,12 +59,12 @@ function SimpleInfiniteList() {
           When it becomes visible on the screen, or it comes near, it triggers 'onLoadMore'.
           This is our "sentry".
           We can also use another "sentry" which is separated from the "Loading" component like:
-            <div ref={infiniteRef} />
+            <div ref={sentryRef} />
             {loading && <ListItem>Loading...</ListItem>}
           and leave "Loading" without this ref.
       */}
       {(loading || hasNextPage) && (
-        <ListItem ref={infiniteRef}>
+        <ListItem ref={sentryRef}>
           <Loading />
         </ListItem>
       )}
@@ -79,7 +79,7 @@ Or if we have a scrollable container and we want to use it as our "list containe
 function InfiniteListWithVerticalScroll() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
-  const [infiniteRef, { rootRef }] = useInfiniteScroll({
+  const [sentryRef, { rootRef }] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: loadMore,
@@ -97,7 +97,7 @@ function InfiniteListWithVerticalScroll() {
           <ListItem key={item.key}>{item.value}</ListItem>
         ))}
         {(loading || hasNextPage) && (
-          <ListItem ref={infiniteRef}>
+          <ListItem ref={sentryRef}>
             <Loading />
           </ListItem>
         )}
