@@ -11,14 +11,20 @@
 This is a hook to create infinite scroll components!  
 **Live demo is [here](https://onderonur.github.io/react-infinite-scroll-hook/).**
 
+Basically, we need to set a `sentry` component to trigger infinite loading. When `sentry` becomes visible on the screen or it comes near to be visible (based on our config of course), it triggers infinite loading (by calling `onLoadMore` callback) all with the help of `IntersectionObserver`. 
+
+`sentry` should be some component which will **not** be unmounted as long as we want to keep the infinite scrolling observer **active**. For example, we can use a "loading" indicator as our sentry. The trick is, because that we want to keep the infinite scrolling observer active as long as there is a **next page**, we need to keep this "loading" component mounted even if we don't have a `loading` flag as `true`. This will also keep our layout more consistent and prevent flickering etc.
+
+We don't need to use a "loading" component as the `sentry` and we can keep them separate too. It can be anything like some empty `div` or last item of your list etc. We just need to place it based on our scrolling direction (to bottom if we want to trigger loading when we scroll to bottom, to top if we want to trigger it when we scroll to top like a chat message box etc. Same approach can be used with horizontal scrolling too.)
+
+Please check below to find examples with different layouts and libraries.
+
+**Note:** This package uses `IntersectionObserver` under the hood. You might want to check the browser compatibility from **[here](https://caniuse.com/intersectionobserver)** and if you want to support older browsers, you might need to use a polyfill.
+
 Before **v4**, `useInfiniteScroll` hook would basically check the DOM with an interval and look at the distance between the bottom of your "infinite" component and the bottom of the window. This was a simple solution. But it had its difficulties. It was not so easy to change the layout of your "infinite" component (like creating a chat message box with inverted scrolling etc). It was a requirement to modify the package based on each different use case.
 
 And also, checking the DOM with an interval by using `setInterval` wasn't a sophisticated solution. It was enough, but it had it's limits.
 With **v4**, we migrated to use `IntersectionObserver` and created a much more flexible API to support different design. Basically, now we have a little bit more [inversion of control](https://kentcdodds.com/blog/inversion-of-control).
-
-Basically, we need to set a `sentry` component to trigger infinite loading. When `sentry` becomes visible on the screen, or it comes near (based on our config of course), it triggers infinite loading all with the help of `IntersectionObserver`. So, we can make components with different layouts like an inverted scrolling chat message box, horizontal scrolling etc.
-
-**Note:** This package uses `IntersectionObserver` under the hood. You might want to check the browser compatibility from **[here](https://caniuse.com/intersectionobserver)** and if you want to support older browsers, you might need to use a polyfill.
 
 If you want to use the older version which is using `setInterval`, you can find it **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/v3)**.
 
@@ -108,7 +114,9 @@ function InfiniteListWithVerticalScroll() {
 ```
 
 ### Other Examples
-You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
+You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.  
+
+Also, we have more realistinc examples with [swr](https://github.com/onderonur/tmdb-explorer) and [Apollo GraphQL](https://github.com/onderonur/rick-and-morty-graphql) too.
 
 ### Arguments
 
