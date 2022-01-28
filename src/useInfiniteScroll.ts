@@ -2,15 +2,20 @@ import { useEffect } from 'react';
 import {
   useTrackVisibility,
   IntersectionObserverHookArgs,
-  IntersectionObserverHookRefCallback,
-  IntersectionObserverHookRootRefCallback,
+  IntersectionObserverHookRefCallback as UseInfiniteScrollHookRefCallback,
+  IntersectionObserverHookRootRefCallback as UseInfiniteScrollHookRootRefCallback,
 } from 'react-intersection-observer-hook';
 
 const DEFAULT_DELAY_IN_MS = 100;
 
+export {
+  UseInfiniteScrollHookRefCallback,
+  UseInfiniteScrollHookRootRefCallback,
+};
+
 export type UseInfiniteScrollHookResult = [
-  IntersectionObserverHookRefCallback,
-  { rootRef: IntersectionObserverHookRootRefCallback },
+  UseInfiniteScrollHookRefCallback,
+  { rootRef: UseInfiniteScrollHookRootRefCallback },
 ];
 
 export type UseInfiniteScrollHookArgs = Pick<
