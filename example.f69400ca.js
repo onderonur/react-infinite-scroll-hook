@@ -35496,8 +35496,65 @@ exports.useTrackVisibility = useTrackVisibility;
 
 var _react = require("react");
 
+function createObserverCache() {
+  var cachesByRoot = new Map();
+  var entryCallbacks = new Map();
+
+  function getObserver(_ref) {
+    var root = _ref.root,
+        rootMargin = _ref.rootMargin,
+        threshold = _ref.threshold;
+    var cacheByRoot = cachesByRoot.get(root);
+
+    if (!cacheByRoot) {
+      cacheByRoot = new Map();
+      cachesByRoot.set(root, cacheByRoot);
+    }
+
+    var cacheKey = JSON.stringify({
+      rootMargin: rootMargin,
+      threshold: threshold
+    });
+    var observer = cacheByRoot.get(cacheKey);
+
+    if (!observer) {
+      observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var callback = entryCallbacks.get(entry.target);
+          callback == null ? void 0 : callback(entry);
+        });
+      }, {
+        root: root,
+        rootMargin: rootMargin,
+        threshold: threshold
+      });
+      cacheByRoot.set(cacheKey, observer);
+    }
+
+    return {
+      observe: function observe(node, callback) {
+        var _observer;
+
+        entryCallbacks.set(node, callback);
+        (_observer = observer) == null ? void 0 : _observer.observe(node);
+      },
+      unobserve: function unobserve(node) {
+        var _observer2;
+
+        entryCallbacks["delete"](node);
+        (_observer2 = observer) == null ? void 0 : _observer2.unobserve(node);
+      }
+    };
+  }
+
+  return {
+    getObserver: getObserver
+  };
+}
+
 var DEFAULT_ROOT_MARGIN = '0px';
-var DEFAULT_THRESHOLD = [0]; // For more info:
+var DEFAULT_THRESHOLD = [0];
+var observerCache = /*#__PURE__*/createObserverCache(); // For more info:
 // https://developers.google.com/web/updates/2016/04/intersectionobserver
 // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 
@@ -35514,49 +35571,49 @@ function useIntersectionObserver(args) {
       entry = _useState[0],
       setEntry = _useState[1];
 
-  var unobserve = (0, _react.useCallback)(function () {
-    // Disconnect the current observer (if there is one)
-    var currentObserver = observerRef.current;
-    currentObserver == null ? void 0 : currentObserver.disconnect();
-    observerRef.current = null;
-  }, []);
-  (0, _react.useEffect)(function () {
-    return function () {
-      // We disconnect the observer on unmount to prevent memory leaks etc.
-      unobserve();
-    };
-  }, [unobserve]);
   var observe = (0, _react.useCallback)(function () {
     var node = nodeRef.current;
 
-    if (node) {
-      var root = rootRef.current;
-      var options = {
-        root: root,
-        rootMargin: rootMargin,
-        threshold: threshold
-      }; // Create a observer for current "node" with given options.
-
-      var observer = new IntersectionObserver(function (_ref) {
-        var newEntry = _ref[0];
-        setEntry(newEntry);
-      }, options);
-      observer.observe(node);
-      observerRef.current = observer;
+    if (!node) {
+      setEntry(undefined);
+      return;
     }
+
+    var observer = observerCache.getObserver({
+      root: rootRef.current,
+      rootMargin: rootMargin,
+      threshold: threshold
+    });
+    observer.observe(node, function (observedEntry) {
+      setEntry(observedEntry);
+    });
+    observerRef.current = observer;
   }, [rootMargin, threshold]);
-  var initializeObserver = (0, _react.useCallback)(function () {
+  var unobserve = (0, _react.useCallback)(function () {
+    var currentObserver = observerRef.current;
+    var node = nodeRef.current;
+
+    if (node) {
+      currentObserver == null ? void 0 : currentObserver.unobserve(node);
+    }
+
+    observerRef.current = null;
+  }, []); // React will call the ref callback with the DOM element when the component mounts,
+  // and call it with null when it unmounts.
+  // So, we don't need an useEffect etc to unobserve nodes.
+  // When nodeRef.current is null, it will be unobserved and observe function
+  // won't do anything.
+
+  var refCallback = (0, _react.useCallback)(function (node) {
     unobserve();
+    nodeRef.current = node;
     observe();
   }, [observe, unobserve]);
-  var refCallback = (0, _react.useCallback)(function (node) {
-    nodeRef.current = node;
-    initializeObserver();
-  }, [initializeObserver]);
   var rootRefCallback = (0, _react.useCallback)(function (rootNode) {
+    unobserve();
     rootRef.current = rootNode;
-    initializeObserver();
-  }, [initializeObserver]);
+    observe();
+  }, [observe, unobserve]);
   return [refCallback, {
     entry: entry,
     rootRef: rootRefCallback
@@ -35594,11 +35651,10 @@ function useTrackVisibility(args) {
       wasEverVisible = _useState[0],
       setWasEverVisible = _useState[1];
 
-  (0, _react.useEffect)(function () {
-    if (isVisible) {
-      setWasEverVisible(isVisible);
-    }
-  }, [isVisible]);
+  if (isVisible && !wasEverVisible) {
+    setWasEverVisible(true);
+  }
+
   return [ref, _extends({}, result, {
     isVisible: isVisible,
     wasEverVisible: wasEverVisible
@@ -35609,6 +35665,18 @@ function useTrackVisibility(args) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
+});
+Object.defineProperty(exports, "UseInfiniteScrollHookRefCallback", {
+  enumerable: true,
+  get: function () {
+    return _reactIntersectionObserverHook.IntersectionObserverHookRefCallback;
+  }
+});
+Object.defineProperty(exports, "UseInfiniteScrollHookRootRefCallback", {
+  enumerable: true,
+  get: function () {
+    return _reactIntersectionObserverHook.IntersectionObserverHookRootRefCallback;
+  }
 });
 exports.default = void 0;
 
@@ -35676,6 +35744,18 @@ Object.defineProperty(exports, "UseInfiniteScrollHookResult", {
   enumerable: true,
   get: function () {
     return _useInfiniteScroll.UseInfiniteScrollHookResult;
+  }
+});
+Object.defineProperty(exports, "UseInfiniteScrollHookRefCallback", {
+  enumerable: true,
+  get: function () {
+    return _useInfiniteScroll.UseInfiniteScrollHookRefCallback;
+  }
+});
+Object.defineProperty(exports, "UseInfiniteScrollHookRootRefCallback", {
+  enumerable: true,
+  get: function () {
+    return _useInfiniteScroll.UseInfiniteScrollHookRootRefCallback;
   }
 });
 exports.default = void 0;
@@ -36235,7 +36315,7 @@ function InfiniteListWithVerticalScroll() {
       infiniteRef = _b[0],
       rootRef = _b[1].rootRef;
 
-  return React.createElement(React.Fragment, null, React.createElement(ListContainer, {
+  return React.createElement(ListContainer, {
     ref: rootRef
   }, React.createElement(List_1.List, null, items.map(function (item) {
     return React.createElement(List_1.ListItem, {
@@ -36243,7 +36323,7 @@ function InfiniteListWithVerticalScroll() {
     }, item.value);
   }), hasNextPage && React.createElement(List_1.ListItem, {
     ref: infiniteRef
-  }, React.createElement(List_1.Loading, null)))));
+  }, React.createElement(List_1.Loading, null))));
 }
 
 exports.default = InfiniteListWithVerticalScroll;
@@ -36337,7 +36417,7 @@ function InfiniteListWithHorizontalScroll() {
       infiniteRef = _b[0],
       rootRef = _b[1].rootRef;
 
-  return React.createElement(React.Fragment, null, React.createElement(ListContainer, {
+  return React.createElement(ListContainer, {
     ref: rootRef
   }, React.createElement(List_1.List, {
     direction: "horizontal"
@@ -36347,7 +36427,7 @@ function InfiniteListWithHorizontalScroll() {
     }, item.value);
   }), hasNextPage && React.createElement(List_1.ListItem, {
     ref: infiniteRef
-  }, React.createElement(List_1.Loading, null)))));
+  }, React.createElement(List_1.Loading, null))));
 }
 
 exports.default = InfiniteListWithHorizontalScroll;
@@ -36476,7 +36556,7 @@ function InfiniteListWithReverseVerticalScroll() {
       lastScrollDistanceToBottomRef.current = scrollDistanceToBottom;
     }
   }, []);
-  return React.createElement(React.Fragment, null, React.createElement(ListContainer, {
+  return React.createElement(ListContainer, {
     ref: rootRefSetter,
     onScroll: handleRootScroll
   }, React.createElement(List_1.List, null, hasNextPage && React.createElement(List_1.ListItem, {
@@ -36485,7 +36565,7 @@ function InfiniteListWithReverseVerticalScroll() {
     return React.createElement(List_1.ListItem, {
       key: item.key
     }, item.value);
-  }))));
+  })));
 }
 
 exports.default = InfiniteListWithReverseVerticalScroll;
@@ -36614,7 +36694,7 @@ function InfiniteListWithReverseHozirontalScroll() {
       lastScrollDistanceToRightRef.current = scrollDistanceToRight;
     }
   }, []);
-  return React.createElement(React.Fragment, null, React.createElement(ListContainer, {
+  return React.createElement(ListContainer, {
     ref: rootRefSetter,
     onScroll: handleRootScroll
   }, React.createElement(List_1.List, {
@@ -36625,7 +36705,7 @@ function InfiniteListWithReverseHozirontalScroll() {
     return React.createElement(List_1.ListItem, {
       key: item.key
     }, item.value);
-  }))));
+  })));
 }
 
 exports.default = InfiniteListWithReverseHozirontalScroll;
@@ -36797,7 +36877,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63606" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57799" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
