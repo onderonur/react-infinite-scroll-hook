@@ -1,7 +1,9 @@
 # react-infinite-scroll-hook
-![Build status](https://img.shields.io/github/workflow/status/onderonur/react-infinite-scroll-hook/CI)
+
+![Build status](https://img.shields.io/github/actions/workflow/status/onderonur/react-infinite-scroll-hook/main.yml)
 ![License](https://img.shields.io/npm/l/react-infinite-scroll-hook)
-![Version](https://img.shields.io/npm/v/react-infinite-scroll-hook)  
+![Version](https://img.shields.io/npm/v/react-infinite-scroll-hook)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
@@ -11,7 +13,7 @@
 This is a hook to create infinite scroll components!  
 **Live demo is [here](https://onderonur.github.io/react-infinite-scroll-hook/).**
 
-Basically, we need to set a `sentry` component to trigger infinite loading. When `sentry` becomes visible on the screen or it comes near to be visible (based on our config of course), it triggers infinite loading (by calling `onLoadMore` callback) all with the help of `IntersectionObserver`. 
+Basically, we need to set a `sentry` component to trigger infinite loading. When `sentry` becomes visible on the screen or it comes near to be visible (based on our config of course), it triggers infinite loading (by calling `onLoadMore` callback) all with the help of `IntersectionObserver`.
 
 `sentry` should be some component which will **not** be unmounted as long as we want to keep the infinite scrolling observer **active**. For example, we can use a "loading" indicator as our sentry. The trick is, because that we want to keep the infinite scrolling observer active as long as there is a **next page**, we need to keep this "loading" component mounted even if we don't have a `loading` flag as `true`. This will also keep our layout more consistent and prevent flickering etc.
 
@@ -28,13 +30,13 @@ With **v4**, we migrated to use `IntersectionObserver` and created a much more f
 
 If you want to use the older version which is using `setInterval`, you can find it **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/v3)**.
 
-### Installation
+## Installation
 
 ```sh
 npm install react-infinite-scroll-hook
 ```
 
-### Simple Example
+## Simple Example
 
 ```javascript
 import useInfiniteScroll from 'react-infinite-scroll-hook';
@@ -113,12 +115,13 @@ function InfiniteListWithVerticalScroll() {
 }
 ```
 
-### Other Examples
-You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.  
+## Other Examples
+
+You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
 
 Also, we have more realistinc examples with [swr](https://github.com/onderonur/tmdb-explorer) and [Apollo GraphQL](https://github.com/onderonur/rick-and-morty-graphql) too.
 
-### Arguments
+## Arguments
 
 | Name        | Description                                                                                      | Type         | Optional | Default Value |
 | ----------- | ------------------------------------------------------------------------------------------------ | ------------ | -------- | ------------- |
@@ -128,13 +131,6 @@ Also, we have more realistinc examples with [swr](https://github.com/onderonur/t
 | rootMargin  | We pass this to 'IntersectionObserver'. We can use it to configure when to trigger 'onLoadMore'. | string       | ✅       |               |
 | disabled    | Flag to stop infinite scrolling. Can be used in case of an error etc too.                        | boolean      | ✅       |               |
 | delayInMs   | How long it should wait before triggering 'onLoadMore' (in milliseconds).                        | number       | ✅       | 100           |
-
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
 
 ## Contributors ✨
 
