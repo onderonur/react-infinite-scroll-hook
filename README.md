@@ -5,9 +5,7 @@
 ![Version](https://img.shields.io/npm/v/react-infinite-scroll-hook)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This is a hook to create infinite scroll components!  
@@ -143,6 +141,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://nl.linkedin.com/in/eugef"><img src="https://avatars0.githubusercontent.com/u/895071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Eugene Fidelin</b></sub></a><br /><a href="https://github.com/onderonur/react-infinite-scroll-hook/commits?author=eugef" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Evanc123"><img src="https://avatars.githubusercontent.com/u/4010547?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Evan Cater</b></sub></a><br /><a href="https://github.com/onderonur/react-infinite-scroll-hook/commits?author=Evanc123" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/groomain"><img src="https://avatars.githubusercontent.com/u/3601848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Romain</b></sub></a><br /><a href="#example-groomain" title="Examples">💡</a></td>
   </tr>
 </table>
 
