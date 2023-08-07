@@ -27,7 +27,7 @@ function InfiniteListWithReverseHozirontalScroll() {
   const reversedItems = React.useMemo(() => [...items].reverse(), [items]);
 
   // We keep the scroll position when new items are added etc.
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const scrollableRoot = scrollableRootRef.current;
     const lastScrollDistanceToRight = lastScrollDistanceToRightRef.current ?? 0;
     if (scrollableRoot) {
