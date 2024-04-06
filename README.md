@@ -1,11 +1,13 @@
 # react-infinite-scroll-hook
 
-![Build status](https://img.shields.io/github/actions/workflow/status/onderonur/react-infinite-scroll-hook/main.yml)
+![Build status](https://img.shields.io/github/actions/workflow/status/onderonur/react-infinite-scroll-hook/quality.yml)
 ![License](https://img.shields.io/npm/l/react-infinite-scroll-hook)
 ![Version](https://img.shields.io/npm/v/react-infinite-scroll-hook)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This is a hook to create infinite scroll components!  

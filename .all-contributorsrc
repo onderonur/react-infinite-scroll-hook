@@ -3,9 +3,7 @@
   "projectOwner": "onderonur",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "imageSize": 100,
   "commit": true,
   "commitConvention": "none",
@@ -15,27 +13,21 @@
       "name": "Eugene Fidelin",
       "avatar_url": "https://avatars0.githubusercontent.com/u/895071?v=4",
       "profile": "https://nl.linkedin.com/in/eugef",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "Evanc123",
       "name": "Evan Cater",
       "avatar_url": "https://avatars.githubusercontent.com/u/4010547?v=4",
       "profile": "https://github.com/Evanc123",
-      "contributions": [
-        "doc"
-      ]
+      "contributions": ["doc"]
     },
     {
       "login": "groomain",
       "name": "Romain",
       "avatar_url": "https://avatars.githubusercontent.com/u/3601848?v=4",
       "profile": "https://github.com/groomain",
-      "contributions": [
-        "example"
-      ]
+      "contributions": ["example"]
     }
   ],
   "contributorsPerLine": 7

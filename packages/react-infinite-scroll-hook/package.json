@@ -1,0 +1,61 @@
+{
+  "name": "react-infinite-scroll-hook",
+  "version": "5.0.0-alpha.0",
+  "description": "A simple hook to create infinite scroll components",
+  "keywords": [
+    "react",
+    "react-hooks",
+    "infinite-scroll",
+    "react-component"
+  ],
+  "homepage": "https://onderonur.github.io/react-infinite-scroll-hook",
+  "bugs": {
+    "url": "https://github.com/onderonur/react-infinite-scroll-hook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onderonur/react-infinite-scroll-hook.git"
+  },
+  "license": "MIT",
+  "author": "onderonur",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix --max-warnings 0",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "react-intersection-observer-hook": "^3.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/react": "^18.2.74",
+    "react": "^18.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  }
+}

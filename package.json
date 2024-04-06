@@ -1,66 +1,34 @@
 {
-  "version": "4.1.1",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint --fix",
-    "prepare": "tsdx build && husky install"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0"
-  },
   "name": "react-infinite-scroll-hook",
-  "description": "A simple hook to create infinite scroll components",
-  "author": "onderonur",
-  "homepage": "https://onderonur.github.io/react-infinite-scroll-hook",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/onderonur/react-infinite-scroll-hook.git"
-  },
-  "bugs": {
-    "url": "https://github.com/onderonur/react-infinite-scroll-hook/issues"
-  },
-  "keywords": [
-    "react",
-    "react-hooks",
-    "infinite-scroll",
-    "react-component"
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
   ],
-  "module": "dist/react-infinite-scroll-hook.esm.js",
-  "devDependencies": {
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
-    "@typescript-eslint/eslint-plugin": "^4.20.0",
-    "@typescript-eslint/parser": "^4.20.0",
-    "all-contributors-cli": "^6.20.0",
-    "eslint": "^7.23.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.23.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^6.0.0",
-    "prettier": "^2.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.1.0",
-    "typescript": "^4.2.3"
+  "scripts": {
+    "build": "turbo build",
+    "build:bundle": "turbo build --filter=react-infinite-scroll-hook",
+    "dev": "turbo dev",
+    "format": "prettier --check --ignore-unknown .",
+    "format:fix": "prettier --write --ignore-unknown .",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "prepare": "husky && npm run build:bundle",
+    "typecheck": "turbo typecheck"
   },
-  "dependencies": {
-    "react-intersection-observer-hook": "^2.1.1"
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "all-contributors-cli": "^6.26.1",
+    "eslint": "^8.57.0",
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-packagejson": "^2.4.14",
+    "turbo": "latest"
+  },
+  "packageManager": "npm@10.2.4",
+  "engines": {
+    "node": ">=18"
   }
 }
