@@ -3,7 +3,7 @@
   "projectOwner": "onderonur",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": ["./packages/react-infinite-scroll-hook/README.md"],
   "imageSize": 100,
   "commit": true,
   "commitConvention": "none",
@@ -30,5 +30,6 @@
       "contributions": ["example"]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "linkToUsage": true
 }

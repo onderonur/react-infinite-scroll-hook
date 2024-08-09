@@ -1,8 +1,5 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": ["**/*.ts", "**/*.tsx", "lint-staged.config.js"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mjs"],
   "exclude": ["node_modules", "dist"]
 }

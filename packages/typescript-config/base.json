@@ -15,6 +15,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    // We use TypeScript only for linting/typechecking purposes.
+    // So, we don't need it to emit anything.
+    "noEmit": true
   }
 }

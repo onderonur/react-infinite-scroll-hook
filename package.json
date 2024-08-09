@@ -1,6 +1,7 @@
 {
   "name": "react-infinite-scroll-hook",
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -8,26 +9,30 @@
   "scripts": {
     "build": "turbo build",
     "build:bundle": "turbo build --filter=react-infinite-scroll-hook",
+    "codequality:check": "npm run format:check && npm run lint:check && npm run types:check",
+    "codequality:fix": "npm run format:fix && npm run lint:fix && npm run types:check",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
     "dev": "turbo dev",
-    "format": "prettier --check --ignore-unknown .",
+    "format:check": "prettier --check --ignore-unknown .",
     "format:fix": "prettier --write --ignore-unknown .",
-    "lint": "turbo lint",
+    "lint:check": "turbo lint:check",
     "lint:fix": "turbo lint:fix",
     "prepare": "husky && npm run build:bundle",
-    "typecheck": "turbo typecheck"
+    "types:check": "turbo types:check",
+    "updates:check": "npm-check-updates -i -ws --root"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
     "all-contributors-cli": "^6.26.1",
-    "eslint": "^8.57.0",
-    "husky": "^9.0.11",
-    "prettier": "^3.2.5",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "prettier-plugin-packagejson": "^2.4.14",
-    "turbo": "latest"
+    "husky": "^9.1.4",
+    "npm-check-updates": "^17.0.6",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.0.0",
+    "prettier-plugin-packagejson": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "turbo": "^2.0.14"
   },
-  "packageManager": "npm@10.2.4",
+  "packageManager": "npm@10.8.2",
   "engines": {
     "node": ">=18"
   }

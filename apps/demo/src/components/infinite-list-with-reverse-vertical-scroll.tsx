@@ -9,10 +9,8 @@ export function InfiniteListWithReverseVerticalScroll() {
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
     loading,
     hasNextPage,
-    // TODO: Will check this
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     onLoadMore: loadMore,
-    disabled: !!error,
+    disabled: Boolean(error),
     rootMargin: '400px 0px 0px 0px',
   });
 

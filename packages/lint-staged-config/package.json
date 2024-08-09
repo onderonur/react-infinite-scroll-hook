@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "files": [
-    "generic.js",
-    "next.js"
+    "generic.mjs",
+    "next.mjs"
   ]
 }

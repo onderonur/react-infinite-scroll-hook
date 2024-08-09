@@ -1,15 +1,7 @@
-import useInfiniteScroll, {
+export {
+  default,
   type UseInfiniteScrollHookArgs,
   type UseInfiniteScrollHookRefCallback,
   type UseInfiniteScrollHookResult,
   type UseInfiniteScrollHookRootRefCallback,
 } from './use-infinite-scroll';
-
-export {
-  type UseInfiniteScrollHookArgs,
-  type UseInfiniteScrollHookRefCallback,
-  type UseInfiniteScrollHookResult,
-  type UseInfiniteScrollHookRootRefCallback,
-};
-
-export default useInfiniteScroll;

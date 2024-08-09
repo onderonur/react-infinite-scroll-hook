@@ -1,0 +1,68 @@
+# https://github.com/actions/starter-workflows/blob/main/pages/nextjs.yml
+# Sample workflow for building and deploying a Next.js site to GitHub Pages
+#
+# To get started with Next.js see: https://nextjs.org/docs/getting-started
+#
+name: Deploy Next.js site to Pages
+
+on:
+  # Runs when `Quality` workflow gets completed on `main` branch
+  workflow_run:
+    branches: ['main']
+    workflows: ['Quality']
+    types:
+      - completed
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    # Since `workflow_run` only has 3 activity types (`completed`, `requested` and `in_progress`),
+    # even if `Quality` workflow gets completed by failing, this workflow starts to run.
+    # To prevent this, we add a condition here.
+    # https://github.com/orgs/community/discussions/26238#discussioncomment-3250901
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Install
+        uses: ./.github/composite-actions/install
+      - name: Build with Next.js
+        run: npm run build -- --filter=demo
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./apps/demo/out
+
+  # Deployment job
+  deploy:
+    # Since `workflow_run` only has 3 activity types (`completed`, `requested` and `in_progress`),
+    # even if `Quality` workflow gets completed by failing, this workflow starts to run.
+    # To prevent this, we add a condition here.
+    # https://github.com/orgs/community/discussions/26238#discussioncomment-3250901
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

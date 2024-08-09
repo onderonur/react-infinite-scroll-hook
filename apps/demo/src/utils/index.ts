@@ -45,8 +45,10 @@ export function useLoadItems() {
       );
       setItems((current) => [...current, ...data]);
       setHasNextPage(newHasNextPage);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Something went wrong'));
+    } catch (error_) {
+      setError(
+        error_ instanceof Error ? error_ : new Error('Something went wrong'),
+      );
     } finally {
       setLoading(false);
     }

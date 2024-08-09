@@ -17,12 +17,12 @@ type ListItemProps = React.PropsWithChildren;
 
 export const ListItem = forwardRef<React.ElementRef<'li'>, ListItemProps>(
   function ListItem(props, ref) {
-    return <li ref={ref} className="bg-slate-200 border p-2 m-1" {...props} />;
+    return <li ref={ref} className="m-1 border bg-slate-200 p-2" {...props} />;
   },
 );
 
 export function Loading() {
   return (
-    <div className="animate-pulse p-2 bg-slate-600 text-white">Loading...</div>
+    <div className="animate-pulse bg-slate-600 p-2 text-white">Loading...</div>
   );
 }

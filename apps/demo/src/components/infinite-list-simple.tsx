@@ -8,12 +8,10 @@ export function InfiniteListSimple() {
   const [infiniteRef] = useInfiniteScroll({
     loading,
     hasNextPage,
-    // TODO: Will check this
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     onLoadMore: loadMore,
     // When there is an error, we stop infinite loading.
     // It can be reactivated by setting "error" state as undefined.
-    disabled: !!error,
+    disabled: Boolean(error),
     // `rootMargin` is passed to `IntersectionObserver`.
     // We can use it to trigger 'onLoadMore' when the sentry comes near to become
     // visible, instead of becoming fully visible on the screen.

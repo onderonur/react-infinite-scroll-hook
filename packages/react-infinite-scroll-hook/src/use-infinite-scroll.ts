@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   useTrackVisibility,
   type IntersectionObserverHookArgs,
@@ -28,8 +28,7 @@ export type UseInfiniteScrollHookArgs = Pick<
   // If the list has more items to load.
   hasNextPage: boolean;
   // The callback function to execute when the 'onLoadMore' is triggered.
-  // eslint-disable-next-line no-undef
-  onLoadMore: VoidFunction;
+  onLoadMore: () => unknown;
   // Flag to stop infinite scrolling. Can be used in case of an error etc too.
   disabled?: boolean;
   // How long it should wait before triggering 'onLoadMore'.
@@ -44,13 +43,17 @@ function useInfiniteScroll({
   disabled,
   delayInMs = DEFAULT_DELAY_IN_MS,
 }: UseInfiniteScrollHookArgs): UseInfiniteScrollHookResult {
+  const savedCallbackRef = useRef(onLoadMore);
   const [ref, { rootRef, isVisible }] = useTrackVisibility({
     rootMargin,
   });
 
+  useEffect(() => {
+    savedCallbackRef.current = onLoadMore;
+  }, [onLoadMore]);
+
   const shouldLoadMore = !disabled && !loading && isVisible && hasNextPage;
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (shouldLoadMore) {
       // When we trigger 'onLoadMore' and new items are added to the list,
@@ -60,13 +63,13 @@ function useInfiniteScroll({
       // We use a small delay here to prevent this kind of situations.
       // It can be configured by hook args.
       const timer = setTimeout(() => {
-        onLoadMore();
+        savedCallbackRef.current();
       }, delayInMs);
       return () => {
         clearTimeout(timer);
       };
     }
-  }, [onLoadMore, shouldLoadMore, delayInMs]);
+  }, [shouldLoadMore, delayInMs]);
 
   return [ref, { rootRef }];
 }

@@ -23,36 +23,41 @@ export default function Page() {
   let InfiniteList;
 
   switch (listType) {
-    case InfiniteListType.VERTICAL_SCROLL:
+    case InfiniteListType.VERTICAL_SCROLL: {
       InfiniteList = InfiniteListWithVerticalScroll;
       break;
-    case InfiniteListType.HORIZONTAL_SCROLL:
+    }
+    case InfiniteListType.HORIZONTAL_SCROLL: {
       InfiniteList = InfiniteListWithHorizontalScroll;
       break;
-    case InfiniteListType.REVERSE_VERTICAL_SCROLL:
+    }
+    case InfiniteListType.REVERSE_VERTICAL_SCROLL: {
       InfiniteList = InfiniteListWithReverseVerticalScroll;
       break;
-    case InfiniteListType.REVERSE_HORIZONTAL_SCROLL:
+    }
+    case InfiniteListType.REVERSE_HORIZONTAL_SCROLL: {
       InfiniteList = InfiniteListWithReverseHozirontalScroll;
       break;
-    default:
+    }
+    default: {
       InfiniteList = InfiniteListSimple;
+    }
   }
 
   return (
-    <main className="p-4 flex flex-col gap-2">
+    <main className="flex flex-col gap-2 p-4">
       <h1 className="text-2xl font-black">Infinite List</h1>
-      <p className="font-bold text-xl">
+      <p className="text-xl font-bold">
         Created by using “react-infinite-scroll-hook”
       </p>
       <label htmlFor="listType" className="font-semibold">
         List Type
         <select
           id="listType"
-          className="border rounded ml-2 p-1"
+          className="ml-2 rounded border p-1"
           value={listType}
           onChange={(e) => {
-            setListType(parseInt(e.target.value));
+            setListType(Number.parseInt(e.target.value));
           }}
         >
           <option value={InfiniteListType.SIMPLE}>Simple List</option>

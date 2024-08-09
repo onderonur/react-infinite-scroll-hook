@@ -2,9 +2,11 @@ name: Quality
 
 on:
   push:
-    branches:
-      # TODO: This will be replaced with `main` later.
-      - monorepo
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # To cancel previous workflow when a new one is triggered.
 concurrency:
@@ -18,12 +20,10 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v4
-
       - name: Install
         uses: ./.github/composite-actions/install
-
       - name: Run format check
-        run: npm run format
+        run: npm run format:check
 
   lint:
     name: Lint
@@ -31,12 +31,10 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v4
-
       - name: Install
         uses: ./.github/composite-actions/install
-
       - name: Run lint check
-        run: npm run lint
+        run: npm run lint:check
 
   typecheck:
     name: Typecheck
@@ -44,12 +42,10 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v4
-
       - name: Install
         uses: ./.github/composite-actions/install
-
       - name: Run type check
-        run: npm run typecheck
+        run: npm run types:check
 
   build:
     name: Build
@@ -57,9 +53,7 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v4
-
       - name: Install
         uses: ./.github/composite-actions/install
-
       - name: Run build
         run: npm run build
