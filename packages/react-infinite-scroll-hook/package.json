@@ -1,6 +1,6 @@
 {
   "name": "react-infinite-scroll-hook",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "A simple hook to create infinite scroll components",
   "keywords": [
     "react",
@@ -62,6 +62,7 @@
     "typescript": "^5.5.4"
   },
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   }
 }
