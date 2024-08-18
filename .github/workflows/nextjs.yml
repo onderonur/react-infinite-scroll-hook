@@ -52,11 +52,6 @@ jobs:
 
   # Deployment job
   deploy:
-    # Since `workflow_run` only has 3 activity types (`completed`, `requested` and `in_progress`),
-    # even if `Quality` workflow gets completed by failing, this workflow starts to run.
-    # To prevent this, we add a condition here.
-    # https://github.com/orgs/community/discussions/26238#discussioncomment-3250901
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
