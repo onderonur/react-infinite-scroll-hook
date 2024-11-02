@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
 
-type ListProps = React.PropsWithChildren & {
+type ListProps = {
   direction?: 'vertical' | 'horizontal';
+  children: React.ReactNode;
 };
 
 export function List({ direction, ...rest }: ListProps) {
@@ -13,9 +14,11 @@ export function List({ direction, ...rest }: ListProps) {
   );
 }
 
-type ListItemProps = React.PropsWithChildren;
+type ListItemProps = {
+  children: React.ReactNode;
+};
 
-export const ListItem = forwardRef<React.ElementRef<'li'>, ListItemProps>(
+export const ListItem = forwardRef<React.ComponentRef<'li'>, ListItemProps>(
   function ListItem(props, ref) {
     return <li ref={ref} className="m-1 border bg-slate-200 p-2" {...props} />;
   },

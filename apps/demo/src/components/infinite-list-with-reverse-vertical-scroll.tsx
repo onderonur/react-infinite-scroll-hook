@@ -14,7 +14,7 @@ export function InfiniteListWithReverseVerticalScroll() {
     rootMargin: '400px 0px 0px 0px',
   });
 
-  const scrollableRootRef = useRef<React.ElementRef<'div'> | null>(null);
+  const scrollableRootRef = useRef<React.ComponentRef<'div'> | null>(null);
   const lastScrollDistanceToBottomRef = useRef<number>();
 
   const reversedItems = useMemo(() => [...items].reverse(), [items]);
