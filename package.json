@@ -9,18 +9,18 @@
   "scripts": {
     "build": "turbo build",
     "build:bundle": "turbo build --filter=react-infinite-scroll-hook",
-    "codequality:check": "npm run format:check && npm run lint:check && npm run types:check",
-    "codequality:fix": "npm run format:fix && npm run lint:fix && npm run types:check",
+    "codequality": "npm run format && npm run lint && npm run typecheck",
+    "codequality:fix": "npm run format:fix && npm run lint:fix && npm run typecheck",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
     "dev": "turbo dev",
-    "format:check": "prettier --check --ignore-unknown .",
+    "format": "prettier --check --ignore-unknown .",
     "format:fix": "prettier --write --ignore-unknown .",
-    "lint:check": "turbo lint:check",
+    "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "prepare": "husky && npm run build:bundle",
-    "types:check": "turbo types:check",
-    "updates:check": "npm-check-updates -i -ws --root"
+    "typecheck": "turbo typecheck",
+    "updates": "npm-check-updates -i -ws --root"
   },
   "devDependencies": {
     "all-contributors-cli": "^6.26.1",

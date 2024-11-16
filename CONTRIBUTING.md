@@ -27,7 +27,7 @@ All checks are run automatically before committing by using [husky](https://gith
 The checks can be run manually by running the below command too.
 
 ```bash
-npm run codequality:check
+npm run codequality
 ```
 
 And the same checks can be run also by enabling fixes for auto-fixable issues.
@@ -40,17 +40,17 @@ npm run codequality:fix
 
 ```bash
 # ESLint checks
-npm run lint:check
+npm run lint
 # ESLint fixes
 npm run lint:fix
 
 # Prettier checks
-npm run format:check
+npm run format
 # Prettier fixes
 npm run format:fix
 
 # TypeScript checks
-npm run types:check
+npm run typecheck
 # There is no auto-fix script for TypeScript.
 ```
 
@@ -61,7 +61,7 @@ We use `npm-check-updates` package to automatically check if there are newer ver
 To run it, we can use the below command. It starts an interactive CLI to check the dependencies of all the apps and packages, including the root dependencies.
 
 ```bash
-npm run updates:check
+npm run updates
 ```
 
 ## Adding Contributors
@@ -90,10 +90,10 @@ To be sure the output is OK for ESM and CJS clients, we can run the below comman
 
 ```bash
 # For `publint`
-npm run publint:check -w react-infinite-scroll-hook
+npm run publint -w react-infinite-scroll-hook
 
 # For `Are the Types Wrong`
-npm run attw:check -w react-infinite-scroll-hook
+npm run attw -w react-infinite-scroll-hook
 ```
 
 To see the content of the package which can be uploaded to [npm](https://www.npmjs.com/) can be seen by using the below command. It will create a tarball from `react-infinite-scroll-hook` package.

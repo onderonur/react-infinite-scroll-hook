@@ -37,14 +37,14 @@
     "dist"
   ],
   "scripts": {
-    "attw:check": "attw --pack .",
+    "attw": "attw --pack .",
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint:check": "eslint . --max-warnings 0",
+    "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --max-warnings 0",
     "prepublishOnly": "npm run build",
-    "publint:check": "publint",
-    "types:check": "tsc"
+    "publint": "publint",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "react-intersection-observer-hook": "^3.0.0"

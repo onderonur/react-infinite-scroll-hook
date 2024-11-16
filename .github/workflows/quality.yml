@@ -23,7 +23,7 @@ jobs:
       - name: Install
         uses: ./.github/composite-actions/install
       - name: Run format check
-        run: npm run format:check
+        run: npm run format
 
   lint:
     name: Lint
@@ -34,7 +34,7 @@ jobs:
       - name: Install
         uses: ./.github/composite-actions/install
       - name: Run lint check
-        run: npm run lint:check
+        run: npm run lint
 
   typecheck:
     name: Typecheck
@@ -45,7 +45,7 @@ jobs:
       - name: Install
         uses: ./.github/composite-actions/install
       - name: Run type check
-        run: npm run types:check
+        run: npm run typecheck
 
   build:
     name: Build
