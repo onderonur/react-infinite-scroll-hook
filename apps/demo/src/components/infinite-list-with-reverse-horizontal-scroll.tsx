@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import { useLoadItems } from '../utils';
+import { useLoadItems } from '../lib/utils';
 import { List, ListItem, Loading } from './list';
 
 export function InfiniteListWithReverseHozirontalScroll() {
