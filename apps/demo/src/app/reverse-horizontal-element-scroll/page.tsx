@@ -1,9 +1,12 @@
+'use client';
+
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import { useLoadItems } from '../lib/utils';
-import { List, ListItem, Loading } from './list';
+import { List, ListItem, Loading } from '../../components/list';
+import { PageTitle } from '../../components/page-title';
+import { useLoadItems } from '../../lib/utils';
 
-export function InfiniteListWithReverseHozirontalScroll() {
+export default function ReverseHorizontalElementScrollPage() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
@@ -46,21 +49,22 @@ export function InfiniteListWithReverseHozirontalScroll() {
   }, []);
 
   return (
-    <div
-      ref={rootRefSetter}
-      className="max-w-[600px] overflow-auto bg-slate-100"
-      onScroll={handleRootScroll}
-    >
-      <List direction="horizontal">
-        {hasNextPage && (
-          <ListItem ref={infiniteRef}>
-            <Loading />
-          </ListItem>
-        )}
-        {reversedItems.map((item) => (
-          <ListItem key={item.key}>{item.value}</ListItem>
-        ))}
-      </List>
-    </div>
+    <main>
+      <PageTitle filePath="apps/demo/src/app/reverse-horizontal-element-scroll/page.tsx">
+        Reverse Horizontal Element Scroll
+      </PageTitle>
+      <div
+        ref={rootRefSetter}
+        className="flex max-w-[600px] overflow-auto bg-slate-100"
+        onScroll={handleRootScroll}
+      >
+        {hasNextPage && <Loading ref={infiniteRef} />}
+        <List direction="horizontal">
+          {reversedItems.map((item) => (
+            <ListItem key={item.key}>{item.value}</ListItem>
+          ))}
+        </List>
+      </div>
+    </main>
   );
 }

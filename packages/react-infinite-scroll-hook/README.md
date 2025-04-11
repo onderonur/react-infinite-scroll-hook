@@ -38,19 +38,19 @@ npm install react-infinite-scroll-hook
 
 ## Simple Example
 
-```javascript
+```tsx
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 
-function SimpleInfiniteList() {
+function WindowScroll() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
-  const [sentryRef] = useInfiniteScroll({
+  const [infiniteRef] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: loadMore,
     // When there is an error, we stop infinite loading.
     // It can be reactivated by setting "error" state as undefined.
-    disabled: !!error,
+    disabled: Boolean(error),
     // `rootMargin` is passed to `IntersectionObserver`.
     // We can use it to trigger 'onLoadMore' when the sentry comes near to become
     // visible, instead of becoming fully visible on the screen.
@@ -58,68 +58,52 @@ function SimpleInfiniteList() {
   });
 
   return (
-    <List>
-      {items.map((item) => (
-        <ListItem key={item.key}>{item.value}</ListItem>
-      ))}
-      {/* 
-          As long as we have a "next page", we show "Loading" right under the list.
-          When it becomes visible on the screen, or it comes near, it triggers 'onLoadMore'.
-          This is our "sentry".
-          We can also use another "sentry" which is separated from the "Loading" component like:
-            <div ref={sentryRef} />
-            {loading && <ListItem>Loading...</ListItem>}
-          and leave "Loading" without this ref.
-      */}
-      {(loading || hasNextPage) && (
-        <ListItem ref={sentryRef}>
-          <Loading />
-        </ListItem>
-      )}
-    </List>
+    <div>
+      <List>
+        {items.map((item) => (
+          <ListItem key={item.key}>{item.value}</ListItem>
+        ))}
+      </List>
+      {hasNextPage && <Loading ref={infiniteRef} />}
+    </div>
   );
 }
 ```
 
 Or if we have a scrollable container and we want to use it as our "list container" instead of `document`, we just need to use `rootRef` like:
 
-```js
-function InfiniteListWithVerticalScroll() {
+```tsx
+import useInfiniteScroll from 'react-infinite-scroll-hook';
+
+function VerticalElementScrollPage() {
   const { loading, items, hasNextPage, error, loadMore } = useLoadItems();
 
-  const [sentryRef, { rootRef }] = useInfiniteScroll({
+  const [infiniteRef, { rootRef }] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: loadMore,
-    disabled: !!error,
+    disabled: Boolean(error),
     rootMargin: '0px 0px 400px 0px',
   });
 
   return (
-    <ListContainer
-      // This where we set our scrollable root component.
-      ref={rootRef}
-    >
+    <Scrollable ref={rootRef}>
       <List>
         {items.map((item) => (
           <ListItem key={item.key}>{item.value}</ListItem>
         ))}
-        {(loading || hasNextPage) && (
-          <ListItem ref={sentryRef}>
-            <Loading />
-          </ListItem>
-        )}
       </List>
-    </ListContainer>
+      {hasNextPage && <Loading ref={infiniteRef} />}
+    </Scrollable>
   );
 }
 ```
 
 ## Other Examples
 
-You can find different layout examples **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/master/example/examples)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
+You can find different layout examples **[here](./apps/demo/src/app/)**. **[Live demo](https://onderonur.github.io/react-infinite-scroll-hook/)** contains all of these cases.
 
-Also, we have more realistinc examples with [swr](https://github.com/onderonur/tmdb-explorer) and [Apollo GraphQL](https://github.com/onderonur/rick-and-morty-graphql) too.
+Also, we have more realistic examples with [SWR](https://github.com/onderonur/next-moviez) and [TanStack Query](https://github.com/onderonur/next-rickql) too.
 
 ## Arguments
 
