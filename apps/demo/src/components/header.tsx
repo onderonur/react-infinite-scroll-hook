@@ -37,6 +37,7 @@ export function Header() {
           <option value="/horizontal-element-scroll">
             Horizontal Element Scroll
           </option>
+          <option value="/reverse-window-scroll">Reverse Window Scroll</option>
           <option value="/reverse-vertical-element-scroll">
             Reverse Vertical Element Scroll
           </option>

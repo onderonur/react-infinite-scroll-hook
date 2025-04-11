@@ -14,7 +14,6 @@ export default function ReverseHorizontalElementScrollPage() {
     hasNextPage,
     onLoadMore: loadMore,
     disabled: Boolean(error),
-    rootMargin: '0px 0px 0px 400px',
   });
 
   const scrollableRootRef = useRef<React.ComponentRef<'div'> | null>(null);

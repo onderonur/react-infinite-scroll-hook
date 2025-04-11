@@ -13,7 +13,6 @@ export default function HorizontalElementScrollPage() {
     hasNextPage,
     onLoadMore: loadMore,
     disabled: Boolean(error),
-    rootMargin: '0px 400px 0px 0px',
   });
 
   return (

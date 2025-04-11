@@ -7,7 +7,7 @@ type PageTitleProps = {
 
 export function PageTitle({ filePath, children }: PageTitleProps) {
   return (
-    <div className="pb-2">
+    <div>
       <h1 className="text-xl font-semibold">{children}</h1>
       {filePath && (
         <Link
