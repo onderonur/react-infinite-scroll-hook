@@ -16,14 +16,13 @@ export default function ReverseWindowScrollPage() {
     disabled: Boolean(error),
   });
 
-  const lastScrollDistanceToBottomRef = useRef<number>();
+  const lastScrollDistanceToBottomRef = useRef<number>(0);
 
   const reversedItems = useMemo(() => [...items].reverse(), [items]);
 
   // We keep the scroll position when new items are added etc.
   useLayoutEffect(() => {
-    const lastScrollDistanceToBottom =
-      lastScrollDistanceToBottomRef.current ?? 0;
+    const lastScrollDistanceToBottom = lastScrollDistanceToBottomRef.current;
 
     document.documentElement.scrollTop =
       document.body.scrollHeight - lastScrollDistanceToBottom;

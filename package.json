@@ -24,15 +24,15 @@
   },
   "devDependencies": {
     "all-contributors-cli": "^6.26.1",
-    "husky": "^9.1.4",
-    "lint-staged": "^15.2.11",
-    "npm-check-updates": "^17.0.6",
-    "prettier": "^3.3.3",
-    "prettier-plugin-organize-imports": "^4.0.0",
-    "prettier-plugin-tailwindcss": "^0.6.6",
-    "turbo": "^2.0.14"
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "npm-check-updates": "^18.0.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "turbo": "^2.5.2"
   },
-  "packageManager": "npm@10.8.2",
+  "packageManager": "npm@11.3.0",
   "engines": {
     "node": ">=18"
   }

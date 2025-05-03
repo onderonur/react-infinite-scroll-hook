@@ -17,15 +17,14 @@ export default function ReverseVerticalElementScrollPage() {
   });
 
   const scrollableRootRef = useRef<React.ComponentRef<'div'> | null>(null);
-  const lastScrollDistanceToBottomRef = useRef<number>();
+  const lastScrollDistanceToBottomRef = useRef<number>(0);
 
   const reversedItems = useMemo(() => [...items].reverse(), [items]);
 
   // We keep the scroll position when new items are added etc.
   useLayoutEffect(() => {
     const scrollableRoot = scrollableRootRef.current;
-    const lastScrollDistanceToBottom =
-      lastScrollDistanceToBottomRef.current ?? 0;
+    const lastScrollDistanceToBottom = lastScrollDistanceToBottomRef.current;
     if (scrollableRoot) {
       scrollableRoot.scrollTop =
         scrollableRoot.scrollHeight - lastScrollDistanceToBottom;

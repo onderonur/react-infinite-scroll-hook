@@ -8,5 +8,4 @@ export default defineConfig(() => ({
   clean: true,
   // Generate dts files
   dts: true,
-  minify: true,
 }));
