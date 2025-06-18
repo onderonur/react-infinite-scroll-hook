@@ -23,12 +23,11 @@ Please check below to find examples with different layouts and libraries.
 
 **Note:** This package uses `IntersectionObserver` under the hood. You might want to check the browser compatibility from **[here](https://caniuse.com/intersectionobserver)** and if you want to support older browsers, you might need to use a polyfill.
 
-Before **v4**, `useInfiniteScroll` hook would basically check the DOM with an interval and look at the distance between the bottom of your "infinite" component and the bottom of the window. This was a simple solution. But it had its difficulties. It was not so easy to change the layout of your "infinite" component (like creating a chat message box with inverted scrolling etc). It was a requirement to modify the package based on each different use case.
+## Versions
 
-And also, checking the DOM with an interval by using `setInterval` wasn't a sophisticated solution. It was enough, but it had it's limits.
-With **v4**, we migrated to use `IntersectionObserver` and created a much more flexible API to support different design. Basically, now we have a little bit more [inversion of control](https://kentcdodds.com/blog/inversion-of-control).
+For **React v19**, it is recommended to use versions after `v6`, since it uses [cleanup functions for refs](https://react.dev/blog/2024/12/05/react-19#cleanup-functions-for-refs).
 
-If you want to use the older version which is using `setInterval`, you can find it **[here](https://github.com/onderonur/react-infinite-scroll-hook/tree/v3)**.
+For older versions of React, you can stick with `v5` until you migrate to React 19.
 
 ## Installation
 
