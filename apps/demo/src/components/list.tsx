@@ -1,5 +1,3 @@
-import { forwardRef } from 'react';
-
 type ListProps = {
   direction?: 'vertical' | 'horizontal';
   children: React.ReactNode;
@@ -22,14 +20,16 @@ export function ListItem(props: ListItemProps) {
   return <li className="border bg-slate-200 p-4" {...props} />;
 }
 
-export const Loading = forwardRef<React.ComponentRef<'div'>, unknown>(
-  function Loading(props, ref) {
-    return (
-      <div ref={ref} className="p-1">
-        <div className="animate-pulse bg-slate-600 p-4 text-white">
-          Loading...
-        </div>
+type LoadingProps = {
+  ref?: React.Ref<HTMLDivElement>;
+};
+
+export function Loading({ ref }: LoadingProps) {
+  return (
+    <div ref={ref} className="p-1">
+      <div className="animate-pulse bg-slate-600 p-4 text-white">
+        Loading...
       </div>
-    );
-  },
-);
+    </div>
+  );
+}
